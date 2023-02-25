@@ -1,0 +1,63 @@
+body{
+    background-color: rgb(245, 248, 248);
+}
+.title{
+    font-size: 105px;
+    letter-spacing: 10px;
+}
+.title-admin{
+    font-size: 80px;
+    letter-spacing: 10px;
+}
+.header-space{
+    margin-top: 50px;
+}
+.card{
+    border-radius: 10px;
+}
+.card-custom a{
+    border: 10px solid rgb(171, 170, 173);
+    border-radius: 10px;
+    color: rgb(172, 35, 35);
+    padding: 20px;
+    text-decoration: none;
+    letter-spacing: 5px;
+}
+.card-custom a:hover{
+    background-color: rgb(172, 35, 35);
+    color: white;
+    border: 10px solid rgb(0, 0, 0);
+    box-shadow: 5px 5px rgb(0, 0, 0);
+}
+.custom-input{
+    border: 3px solid black;
+    padding: 10px;
+}
+.input-group{
+    display: flex;
+    align-items: center;
+}
+.custom-input:focus{
+    border: 3px solid #000000;
+
+}
+.calculator{
+    align-items: center;
+}
+.buttons{
+    padding: 10px;
+    width: 130px;
+}
+.card-body{
+    background-color: rgb(98, 98, 99);
+    color: white;
+    letter-spacing: 5px;
+}
+.card-content{
+    background-color: rgb(230, 230, 230);
+    color: rgb(0, 0, 0);    
+    padding: 20px;
+}
+.card-content a{
+    text-decoration: none;
+}
