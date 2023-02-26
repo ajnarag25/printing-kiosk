@@ -9,6 +9,10 @@ body{
     font-size: 80px;
     letter-spacing: 10px;
 }
+.title-user{
+    font-size: 50px;
+    letter-spacing: 10px;
+}
 .header-space{
     margin-top: 50px;
 }
@@ -60,4 +64,22 @@ body{
 }
 .card-content a{
     text-decoration: none;
+}
+.admin_buttons button{
+    padding: 10px;
+    width: 300px;
+}
+.user-title{
+    color: rgb(172, 35, 35);
+    letter-spacing: 5px;
+    font-size: 80px;
+}
+.user-print{
+    color: rgb(172, 35, 35);
+    letter-spacing: 5px;
+    font-size: 50px;
+}
+.user-print-btn{
+    padding: 10px;
+    letter-spacing: 3px;
 }
