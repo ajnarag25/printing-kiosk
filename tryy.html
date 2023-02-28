@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDF Color Count</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+  </head>
+  <body>
+    <h1>PDF Color Count</h1>
+    <input type="file" id="pdfFile" />
+    <br /><br />
+    <button onclick="countColors()">Count Colors</button>
+    <br /><br />
+    <div id="colorCount"></div>
+
+    <script>
+      function countColors() {
+        const file = document.getElementById("pdfFile").files[0];
+
+        if (!file) {
+          alert("Please select a PDF file.");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async function () {
+          const typedarray = new Uint8Array(this.result);
+          const pdf = await pdfjsLib.getDocument(typedarray).promise;
+          const numPages = pdf.numPages;
+
+          let coloredPages = 0;
+          let blackAndWhitePages = 0;
+
+          for (let i = 1; i <= numPages; i++) {
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 1.0 });
+
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport,
+            };
+            await page.render(renderContext).promise;
+
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            let isColored = false;
+
+            for (let j = 0; j < data.length; j += 4) {
+              const r = data[j];
+              const g = data[j + 1];
+              const b = data[j + 2];
+              const a = data[j + 3];
+
+              if (a !== 0 && (r !== g || g !== b)) {
+                isColored = true;
+                break;
+              }
+            }
+
+            if (isColored) {
+              coloredPages++;
+            } else {
+              blackAndWhitePages++;
+            }
+          }
+
+          document.getElementById(
+            "colorCount"
+          ).innerHTML = `Colored pages: ${coloredPages}, Black and white pages: ${blackAndWhitePages}`;
+        };
+
+        reader.readAsArrayBuffer(file);
+      }
+    </script>
+  </body>
+</html>
