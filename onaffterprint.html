@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Print Example</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</head>
+<body>
+  <input type="file" onchange="loadPDF(this.files)">
+  <div id="pdf-container"></div>
+  <button onclick="printPDF()">Print PDF</button>
+
+  <script>
+    var pdfDoc = null;
+    var pageNum = 1;
+    var pageRendering = false;
+    var pageNumPending = null;
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+
+    function loadPDF(files) {
+      var file = files[0];
+      var fileReader = new FileReader();
+      fileReader.onload = function() {
+        var typedarray = new Uint8Array(this.result);
+        PDFJS.getDocument(typedarray).promise.then(function(pdfDoc_) {
+          pdfDoc = pdfDoc_;
+          renderPage(pageNum);
+        });
+      };
+      fileReader.readAsArrayBuffer(file);
+    }
+
+    function renderPage(num) {
+      pageRendering = true;
+      pdfDoc.getPage(num).then(function(page) {
+        var viewport = page.getViewport({scale: 1.5});
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        var renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+        page.render(renderContext).promise.then(function() {
+          pageRendering = false;
+          if (pageNumPending !== null) {
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+    }
+
+    function printPDF() {
+      var printWindow = window.open('', '', 'width=800,height=600');
+      var printDocument = printWindow.document;
+      var pdfImage = canvas.toDataURL('image/png');
+      printDocument.write('<img src="' + pdfImage + '">');
+      printWindow.print();
+    }
+  </script>
+</body>
+</html>

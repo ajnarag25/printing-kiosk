@@ -6,76 +6,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
   </head>
   <body>
-    <form>
-      <label for="pdfFile">Select a PDF file:</label>
-      <input type="file" id="pdfFile" accept=".pdf">
-      <br>
-    
-      <label for="pageSize">Paper size:</label>
-      <select id="pageSize" name="pageSize">
-        <option value="Letter">Letter</option>
-        <option value="Legal">Legal</option>
-        <option value="A4">A4</option>
-        <option value="A3">A3</option>
-      </select>
-      <br>
-    
-      <label for="numCopies">Number of copies:</label>
-      <input type="number" id="numCopies" name="numCopies" min="1" value="1">
-      <br>
-    
-      <label for="orientation">Orientation:</label>
-      <input type="radio" id="portrait" name="orientation" value="portrait" checked>
-      <label for="portrait">Portrait</label>
-      <input type="radio" id="landscape" name="orientation" value="landscape">
-      <label for="landscape">Landscape</label>
-      <br>
-    
-      <label for="color">Color:</label>
-      <input type="radio" id="color" name="color" value="color" checked>
-      <label for="color">Color</label>
-      <input type="radio" id="blackAndWhite" name="color" value="blackAndWhite">
-      <label for="blackAndWhite">Black and white</label>
-      <br>
-    
-      <input type="button" value="Print" onclick="printPdf()">
-    </form>
+    <div id="print-content">
+      <!-- Your content goes here -->
+    </div>
+    <button onclick="window.print()">Print</button>
     
     <script>
-      function printPdf() {
-        const pdfFile = document.getElementById("pdfFile").files[0];
-        const pageSize = document.getElementById("pageSize").value;
-        const numCopies = document.getElementById("numCopies").value;
-        const orientation = document.querySelector('input[name="orientation"]:checked').value;
-        const color = document.querySelector('input[name="color"]:checked').value;
-    
-        const printOptions = {
-          paperSize: pageSize,
-          numCopies: numCopies,
-          orientation: orientation,
-          color: color
-        };
-    
-        const fileReader = new FileReader();
-        fileReader.onload = function() {
-          const pdfData = fileReader.result;
-          console.log(pdfjsLib); // should log the pdfjsLib object
-          const pdfDoc = new window.pdfjsLib.getDocument({data: pdfData});
-    
-          pdfDoc.promise.then(function(pdf) {
-            const printTask = pdf.print({ 
-              ...printOptions, 
-              documentTitle: pdfFile.name 
-            });
-    
-            printTask.promise.then(function() {
-              console.log("Printing completed.");
-            });
-          });
-        };
-        fileReader.readAsArrayBuffer(pdfFile);
-      }
+      function populatePrintData() {
+  // Get the print content element
+  const printContent = document.getElementById('print-content');
+
+  // Get the selected print options 
+  const printOptions = window.matchMedia('print').mediaText;
+
+  // Populate the selected print options and content into a hidden input field
+  const printDataInput = document.createElement('input');
+  printDataInput.type = 'hidden';
+  printDataInput.name = 'printData';
+  printDataInput.value = `Print options: ${printOptions}, Print content: ${printContent.innerHTML}`;
+  document.body.appendChild(printDataInput);
+}
+
+window.onafterprint = function() {
+  // Call the populatePrintData function when the print dialog is closed
+  populatePrintData();
+};
     </script>
-    
   </body>
 </html>

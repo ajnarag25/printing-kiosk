@@ -1,11 +1,7 @@
-import win32ui
-import win32print
-import win32con
+import subprocess
 
-GHOSTSCRIPT_PATH = "C:/Users/admin/Desktop/gs/bin/gswin32.exe"
-GSPRINT_PATH = "C:/Users/admin/Desktop/gs/gsprint.exe"
+def command_print(event = None):
+    command = "{} {}".format('C:/xampp/htdocs/printing_kiosk/printing_kiosk/PDFtoPrinter.exe','C:/Users/admin/Downloads/COLORED_PAGE.pdf')
+    subprocess.call(command,shell=True)
 
-# YOU CAN PUT HERE THE NAME OF YOUR SPECIFIC PRINTER INSTEAD OF DEFAULT
-currentprinter = win32print.GetDefaultPrinter()
-
-win32api.ShellExecute(0, 'open', GSPRINT_PATH, '-ghostscript "'+GHOSTSCRIPT_PATH+'" -printer "'+currentprinter+'" "PDFFile.pdf"', '.', 0)
+command_print()
