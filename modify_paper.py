@@ -24,30 +24,33 @@ pdf_writer = PyPDF2.PdfWriter()
 # Loop through the selected number of pages and add them to the PDF writer object
 for page_num in range(num_pages):
     pdf_writer.add_page(pdf_reader.pages[page_num])
+    page = (pdf_reader.pages[page_num])
+    page.setPageDimensions(595, 842) # A4 paper size in points (1 point = 1/72 inch)
 
-# Set the paper orientation and size
-if orientation == 'portrait':
-    page_width = PyPDF2.inch * 8.5
-    page_height = PyPDF2.inch * 11
-else:
-    page_width = PyPDF2.inch * 11
-    page_height = PyPDF2.inch * 8.5
+# # Set the paper orientation and size
+# if orientation == 'portrait':
+#     page_width = PyPDF2.inch * 8.5
+#     page_height = PyPDF2.inch * 11
+# else:
+#     page_width = PyPDF2.inch * 11
+#     page_height = PyPDF2.inch * 8.5
 
-# Set the paper color mode
-if color_mode == 'color':
-    color = True
-else:
-    color = False
+# # Set the paper color mode
+# if color_mode == 'color':
+#     color = True
+# else:
+#     color = False
 
-# Set the paper size
-if paper_size == 'A4':
-    paper_size = (PyPDF2.units.mm * 210, PyPDF2.units.mm * 297)
-elif paper_size == 'Letter':
-    paper_size = (PyPDF2.units.inch * 8.5, PyPDF2.units.inch * 11)
-else:
-    print("Invalid paper size specified.")
-    exit()
+# # Set the paper size
+# if paper_size == 'A4':
+#     paper_size = (PyPDF2.units.mm * 210, PyPDF2.units.mm * 297)
+# elif paper_size == 'Letter':
+#     paper_size = (PyPDF2.units.inch * 8.5, PyPDF2.units.inch * 11)
+# else:
+#     print("Invalid paper size specified.")
+#     exit()
 
+color = True
 # Create a PDF print options object
 pdf_print_options = PyPDF2.pdf.PrintOptions(pages=(0, num_pages-1), duplex=None, color=color, page_size=paper_size)
 
