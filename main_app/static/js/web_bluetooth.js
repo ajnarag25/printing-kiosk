@@ -10,27 +10,23 @@ button.addEventListener("click", async () => {
             acceptAllDevices: true,
         });
 
-
         // Connect to the GATT server
         // We also get the name of the Bluetooth device here
         let deviceName = device.gatt.device.name;
         const server = await device.gatt.connect(); 
 
-
         // Getting the services we mentioned before through GATT server
         const batteryService = await server.getPrimaryService("battery_service");
         const infoService = await server.getPrimaryService("device_information");
-
 
         // Getting the current battery level
         const batteryLevelCharacteristic = await batteryService.getCharacteristic(
             "battery_level"
         );
+
         // Convert recieved buffer to number
         const batteryLevel = await batteryLevelCharacteristic.readValue();
         const batteryPercent = await batteryLevel.getUint8(0);
-
-
 
         // Getting device information
         // We will get all characteristics from device_information
@@ -62,7 +58,7 @@ button.addEventListener("click", async () => {
                 </ul> 
             `;
         });
-        
+
     } catch(err) {
       console.error(err);
       alert("An error occured while fetching device details");
