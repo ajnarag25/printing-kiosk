@@ -11,4 +11,5 @@ urlpatterns = [
     path('login_admin/', views.login_admin, name="login_admin"),
     path('user_print/', views.user_print, name="user_print"),
     path('user_select/', views.user_select, name="user_select"),
+    path('bluetooth_devices/', views.bluetooth_devices, name="bluetooth_devices"),
 ]

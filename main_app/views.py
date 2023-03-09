@@ -28,6 +28,9 @@ from django.http import HttpResponse
 # import os
 # import shutil
 
+import bluetooth
+from django.http import JsonResponse
+
 # Create your views here.
 def index(request):
     return render(request, "index.html")
@@ -46,3 +49,12 @@ def user_print(request):
 
 def user_select(request):
     return render(request, "user_select.html")
+
+
+def bluetooth_devices(request):
+    devices = bluetooth.discover_devices()
+    device_list = []
+    for addr in devices:
+        name = bluetooth.lookup_name(addr)
+        device_list.append({'name': name, 'address': addr})
+    return render(request, 'try_bluetooth.html', {'devices': device_list})
