@@ -1,15 +1,13 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'assets/tup-logo.png ' %}" rel="icon">
+    <link href="assets/tup-logo.png" rel="icon">
     <title>Printing Kiosk</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom_style.css">
 </head>
 <body>
     <div class="p-5">
@@ -19,17 +17,17 @@
                 <h3>1:05pm</h3>
             </div>
         </div>
-        <a href="{% url 'home' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
-            <img src="{% static 'assets/icons/BACK.png' %}" width="50" alt="">
+        <a href="index.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
+            <img src="assets/icons/BACK.png" width="50" alt="">
         </a>
         <div class="text-center header-space">
             <img src="assets/icons/ADMIN.png" width="70" alt="">
             <h1 class="title-admin">Admin </h1>
             <div class="container mt-5 w-50">
-                <form action="{% url 'home_admin' %}">
+                <form action="home_admin.php">
                     <div class="input-group" id="show_hide_password">
                         <input class="form-control custom-input" id="result" type="password" placeholder="Password" disabled required>      
-                        <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png' %}" width="20" alt=""> <img id="open_eye" src="{% static 'assets/icons/OPEN_EYE.png' %}" width="20" alt=""></a>
+                        <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="assets/icons/CLOSED_EYE.png" width="20" alt=""> <img id="open_eye" src="assets/icons/OPEN_EYE.png" width="20" alt=""></a>
                     </div>
                     <center>
                         <table class="calculator mt-5" >
@@ -61,9 +59,9 @@
       </div>
 
 
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/functions.js' %}"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/functions.js"></script>
 
 </body>
 </html>

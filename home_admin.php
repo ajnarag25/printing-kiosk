@@ -1,15 +1,13 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'assets/tup-logo.png ' %}" rel="icon">
+    <link href="assets/tup-logo.png" rel="icon">
     <title>Printing Kiosk</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom_style.css">
 </head>
 <body>
     <div class="p-5">
@@ -19,8 +17,8 @@
                 <h3>1:05pm</h3>
             </div>
         </div>
-        <a href="{% url 'login_admin' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
-            <img src="{% static 'assets/icons/LOGOUT.png' %}" width="50" alt="">
+        <a href="login_admin.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
+            <img src="assets/icons/LOGOUT.png" width="50" alt="">
         </a>
         <div class="text-center mt-5">
             <div class="row">
@@ -30,8 +28,8 @@
                           <h3 class="card-title">PRICE SETTINGS</h3>
                         </div>
                        <div class="card-content">
-                           <h4 class="mt-2">BLACK : <span><a href=""><img src="{% static 'assets/icons/MINUS.png' %}" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="{% static 'assets/icons/PLUS.png' %}" width="20" alt=""></span></a></h4>
-                           <h4 class="mt-2">COLORED : <span><a href=""><img src="{% static 'assets/icons/MINUS.png' %}" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="{% static 'assets/icons/PLUS.png' %}" width="20" alt=""></span></a></h4>
+                           <h4 class="mt-2">BLACK : <span><a href=""><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                           <h4 class="mt-2">COLORED : <span><a href=""><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
                             <div class="text-center mt-4">
                                 <button class="btn btn-success">SAVE</button>
                                 <button class="btn btn-danger">CANCEL</button>
@@ -83,7 +81,7 @@
                         <h3 class="card-title">TIMER SETTINGS</h3>
                     </div>
                     <div class="card-content">
-                        <h4 class="mt-4">TIME (SEC) : <span><a href=""><img src="{% static 'assets/icons/MINUS.png' %}"  width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                        <h4 class="mt-4">TIME (SEC) : <span><a href=""><img src="assets/icons/MINUS.png"  width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
                         <br>
                          <div class="text-center mt-4">
                              <button class="btn btn-success">SAVE</button>
@@ -128,9 +126,9 @@
 
 
 
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/functions.js' %}"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/functions.js"></script>
 
 </body>
 </html>
