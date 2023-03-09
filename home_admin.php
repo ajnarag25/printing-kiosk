@@ -12,9 +12,11 @@
 <body>
     <div class="p-5">
         <div class="navbar">
-            <h3>Monday</h3>
+            <h3><?php echo  date("l, F d, Y") ?></h3>
             <div class="d-flex">
-                <h3>1:05pm</h3>
+                <h3>
+                    <span id="LiveTime" class=""></span>
+                </h3>
             </div>
         </div>
         <a href="login_admin.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
@@ -45,7 +47,7 @@
                         <form action="">
                             <div class="input-group" id="show_hide_password">
                                 <input class="form-control custom-input" id="result" type="password" placeholder="Password" disabled required>      
-                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png' %}"  width="20" alt=""> <img id="open_eye" src="{% static 'assets/icons/OPEN_EYE.png' %}" width="20" alt=""></a>
+                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="assets/icons/CLOSED_EYE.png"  width="20" alt=""> <img id="open_eye" src="assets/icons/OPEN_EYE.png" width="20" alt=""></a>
                             </div>
                             <center>
                                 <table class="calculator mt-5" >

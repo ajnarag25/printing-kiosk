@@ -12,9 +12,11 @@
 <body>
     <div class="p-5">
         <div class="navbar">
-            <h3>Monday</h3>
+            <h3><?php echo  date("l, F d, Y") ?></h3>
             <div class="d-flex">
-                <h3>1:05pm</h3>
+                <h3>
+                    <span id="LiveTime" class=""></span>
+                </h3>
             </div>
         </div>
         <a href="index.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">

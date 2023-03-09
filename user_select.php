@@ -12,39 +12,29 @@
 <body>
     <div class="p-5">
         <div class="navbar">
-            <h3>Monday</h3>
+            <h3><?php echo  date("l, F d, Y") ?></h3>
             <div class="d-flex">
-                <h3>1:05pm</h3>
+                <h3>
+                    <span id="LiveTime" class=""></span>
+                </h3>
             </div>
         </div>
         <a href="index.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
             <img src="assets/icons/BACK.png" width="50" alt="">
         </a>
         <div class="text-center header-space">
-
-            <h1 class="title-user">Please Select:</h1>
+            <h1 class="title-user">Upload your file</h1>
             <br>
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="">
-                        <img src="assets/icons/BROWSE FILES.png"  width="300" alt="">
-                    </a>
-                    <h3>Browse Files</h3>
-                </div>
-                <div class="col-md-4">
-                    <a href="">
-                        <img src="assets/icons/BLUETOOTH.png" width="300" alt="">
-                    </a>
-                    <h3>Bluetooth</h3>
-                </div>
-                <div class="col-md-4">
-                    <a href="">
-                        <img src="assets/icons/WIFI HOTSPOT.png" width="300" alt="">
-                    </a>
-                    <br><br>
-                    <h3>Wifi-Hotspot</h3>
-                </div>
+            <button class="img-upload" id="upload-img">
+                <img src="assets/icons/UPLOAD.png" width="300" alt="">
+            </button>
+            <div class="input-hidden">
+                <form id="upload-form" action="user_print.php" method="POST" enctype="multipart/form-data">
+                    <input type="file" id="uploadfile" name="uploaded_file" /> 
+                </form>
+
             </div>
+            <h3>Click the icon to upload your file</h3>
         </div>
       </div>
 

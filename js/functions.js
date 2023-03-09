@@ -31,3 +31,24 @@ function addblack() {
     console.log(compute++);
     document.getElementById("black_display").value = count;
 }
+
+// image button
+$("#upload-img").click(function () {
+    $("#uploadfile").click();
+});
+
+// current time
+window.onload = displayClock();
+function displayClock() {
+  var display = new Date().toLocaleTimeString();
+  $("#LiveTime").text(display);
+  setTimeout(displayClock, 1000);
+}
+
+// redirect if there is a file uploaded
+const fileInput = document.getElementById("uploadfile");
+fileInput.addEventListener("change", function() {
+    if (fileInput.value) {
+        document.getElementById("upload-form").submit();
+    }
+});
