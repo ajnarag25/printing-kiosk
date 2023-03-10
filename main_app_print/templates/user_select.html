@@ -30,9 +30,9 @@
                 <img class="img-upload-resize" src="{% static 'assets/icons/UPLOAD.png'%}" width="300" alt="">
             </button>
             <div class="input-hidden">
-                <form id="upload-form" action="{% url 'user_print' %}" method="POST" enctype="multipart/form-data">
+                <form id="upload-form" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input type="file" id="uploadfile" name="uploaded_file" /> 
+                    <input type="file" id="uploadfile" name="uploaded_file"/> 
                 </form>
 
             </div>

@@ -1,7 +1,11 @@
 from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from .forms import UploadFileForm
+import requests
+import json
+import os
+import subprocess
 # import json
 # from .models import *
 # from .forms import *
@@ -20,7 +24,6 @@ from django.http import HttpResponse
 # from docx import Document
 # from docx2pdf import convert
 # # import pythoncom
-# import os
 # import shutil
 
 # Create your views here.
@@ -42,4 +45,54 @@ def user_print(request):
     return render(request, "user_print.html")
 
 def user_select(request):
-    return render(request, "user_select.html")
+    if request.method == 'POST':
+        filename = request.FILES['uploaded_file']
+        name_file = os.path.splitext(str(filename))[0]
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            directory_path = 'uploads/'
+            files = os.listdir(directory_path)
+            files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
+            latest_file = files[-1]
+            instructions = {
+                'parts': [
+                    {
+                    'file': 'document'
+                    }
+                ]
+            }
+            response = requests.request(
+                'POST',
+                'https://api.pspdfkit.com/build',
+                headers = {
+                    'Authorization': 'Bearer pdf_live_fks3MaKwGQAaRm6H1atpHAGJalfmNAXLqorSmjhf6HX'
+                },
+                files = {
+                    'document': open('uploads/'+str(latest_file), 'rb')
+                },
+                data = {
+                    'instructions': json.dumps(instructions)
+                },
+                stream = True
+            )
+
+            if response.ok:
+                with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
+                    for chunk in response.iter_content(chunk_size=8096):
+                        fd.write(chunk)
+                    return redirect ('user_print')
+                    # else:
+                    #     print(response.text)
+                    #     exit()
+            else:
+                print('error uploading file')
+        else:
+            print('error uploading file')
+    else:
+        form = UploadFileForm()
+    return render(request, 'user_select.html', {'form': form})
+
+
+
+
