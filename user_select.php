@@ -19,14 +19,14 @@
                 </h3>
             </div>
         </div>
-        <a href="index.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
+        <a href="home_user.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
             <img src="assets/icons/BACK.png" width="50" alt="">
         </a>
         <div class="text-center header-space">
             <h1 class="title-user">Upload your file</h1>
             <br>
             <button class="img-upload" id="upload-img">
-                <img src="assets/icons/UPLOAD.png" width="300" alt="">
+                <img class="img-upload-resize" src="assets/icons/UPLOAD.png" width="300" alt="">
             </button>
             <div class="input-hidden">
                 <form id="upload-form" action="user_print.php" method="POST" enctype="multipart/form-data">

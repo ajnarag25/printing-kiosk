@@ -27,7 +27,7 @@
             <h1 class="title-user">USER </h1>
             <h1 class="user-title">PLEASE SCAN YOUR I.D FIRST</h1>
             <br>
-            <button class="btn btn-danger user-print-btn" onclick="window.print();">CLICK HERE TO SCAN NOW</button>
+            <a href="user_select.php" class="btn btn-danger user-print-btn">CLICK HERE TO GO NEXT PAGE</a>
         </div>
       </div>
 

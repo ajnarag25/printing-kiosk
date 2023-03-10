@@ -31,7 +31,7 @@
                         <input class="form-control custom-input" id="result" type="password" placeholder="Password" disabled required>      
                         <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="assets/icons/CLOSED_EYE.png" width="20" alt=""> <img id="open_eye" src="assets/icons/OPEN_EYE.png" width="20" alt=""></a>
                     </div>
-                    <center>
+                   
                         <table class="calculator mt-5" >
                             <tr>
                                 <td> <input class="btn btn-secondary buttons" type="button" value="1" onclick="display('1')" /> </td>
@@ -54,7 +54,7 @@
                                 <td> <input class="btn btn-danger buttons" type="button" value="Clear" onclick="clearScreen()" /> </td>
                             </tr>
                         </table>
-                    </center>
+                
                 </form>
             </div>
         </div>
