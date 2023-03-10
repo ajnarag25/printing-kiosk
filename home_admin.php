@@ -1,26 +1,26 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'assets/tup-logo.png ' %}" rel="icon">
+    <link href="assets/tup-logo.png" rel="icon">
     <title>Printing Kiosk</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom_style.css">
 </head>
 <body>
     <div class="p-5">
         <div class="navbar">
-            <h3>Monday</h3>
+            <h3><?php echo  date("l, F d, Y") ?></h3>
             <div class="d-flex">
-                <h3>1:05pm</h3>
+                <h3>
+                    <span id="LiveTime" class=""></span>
+                </h3>
             </div>
         </div>
-        <a href="{% url 'login_admin' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
-            <img src="{% static 'assets/icons/LOGOUT.png' %}" width="50" alt="">
+        <a href="login_admin.php" data-bs-toggle="tooltip" data-bs-placement="top" title="Logout">
+            <img src="assets/icons/LOGOUT.png" width="50" alt="">
         </a>
         <div class="text-center mt-5">
             <div class="row">
@@ -30,8 +30,8 @@
                           <h3 class="card-title">PRICE SETTINGS</h3>
                         </div>
                        <div class="card-content">
-                           <h4 class="mt-2">BLACK : <span><a href=""><img src="{% static 'assets/icons/MINUS.png' %}" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="{% static 'assets/icons/PLUS.png' %}" width="20" alt=""></span></a></h4>
-                           <h4 class="mt-2">COLORED : <span><a href=""><img src="{% static 'assets/icons/MINUS.png' %}" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="{% static 'assets/icons/PLUS.png' %}" width="20" alt=""></span></a></h4>
+                           <h4 class="mt-2">BLACK : <span><a type="button" id="minusButton_black"><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" value="0" id="black_display" disabled>   <a type="button" id="addButton_black"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                           <h4 class="mt-2">COLORED : <span><a type="button" id="minusButton_colored"><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" value="0" id="colored_display" disabled>   <a type="button" id="addButton_colored"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
                             <div class="text-center mt-4">
                                 <button class="btn btn-success">SAVE</button>
                                 <button class="btn btn-danger">CANCEL</button>
@@ -47,7 +47,7 @@
                         <form action="">
                             <div class="input-group" id="show_hide_password">
                                 <input class="form-control custom-input" id="result" type="password" placeholder="Password" disabled required>      
-                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png' %}"  width="20" alt=""> <img id="open_eye" src="{% static 'assets/icons/OPEN_EYE.png' %}" width="20" alt=""></a>
+                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="assets/icons/CLOSED_EYE.png"  width="20" alt=""> <img id="open_eye" src="assets/icons/OPEN_EYE.png" width="20" alt=""></a>
                             </div>
                             <center>
                                 <table class="calculator mt-5" >
@@ -68,7 +68,7 @@
                                     </tr>
                                     <tr>
                                         <td> <input class="btn btn-secondary buttons" type="button" value="0" onclick="display('0')" /> </td>
-                                        <td> <input class="btn btn-success buttons" type="submit" value="SAVE" onclick="calculate()" id="btn" /> </td>
+                                        <td> <input class="btn btn-success buttons" type="submit" value="SAVE" onclick="calculate()" id="btn" /></td>
                                         <td> <input class="btn btn-danger buttons" type="button" value="CLEAR" onclick="clearScreen()" /> </td>
                                     </tr>
                                 </table>
@@ -83,7 +83,7 @@
                         <h3 class="card-title">TIMER SETTINGS</h3>
                     </div>
                     <div class="card-content">
-                        <h4 class="mt-4">TIME (SEC) : <span><a href=""><img src="{% static 'assets/icons/MINUS.png' %}"  width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                        <h4 class="mt-4">TIME (SEC) : <span><a type="button" id="minusTime"><img src="assets/icons/MINUS.png"  width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" value="0" id="time_display" disabled>   <a type="button" id="addTime"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
                         <br>
                          <div class="text-center mt-4">
                              <button class="btn btn-success">SAVE</button>
@@ -120,17 +120,14 @@
                 </div>
                 </div>
             </div>
-
-
-
         </div>
       </div>
 
 
 
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/functions.js' %}"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/functions.js"></script>
 
 </body>
 </html>

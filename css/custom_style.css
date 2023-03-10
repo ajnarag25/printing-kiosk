@@ -83,3 +83,10 @@ body{
     padding: 10px;
     letter-spacing: 3px;
 }
+.img-upload{
+    border:none; 
+    background-color:transparent;
+}
+.input-hidden{
+    display: none;
+}
