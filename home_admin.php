@@ -30,8 +30,8 @@
                           <h3 class="card-title">PRICE SETTINGS</h3>
                         </div>
                        <div class="card-content">
-                           <h4 class="mt-2">BLACK : <span><a href=""><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
-                           <h4 class="mt-2">COLORED : <span><a href=""><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                           <h4 class="mt-2">BLACK : <span><a type="button" id="minusButton_black"><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" value="0" id="black_display" disabled>   <a type="button" id="addButton_black"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                           <h4 class="mt-2">COLORED : <span><a type="button" id="minusButton_colored"><img src="assets/icons/MINUS.png" width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" value="0" id="colored_display" disabled>   <a type="button" id="addButton_colored"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
                             <div class="text-center mt-4">
                                 <button class="btn btn-success">SAVE</button>
                                 <button class="btn btn-danger">CANCEL</button>
@@ -68,7 +68,7 @@
                                     </tr>
                                     <tr>
                                         <td> <input class="btn btn-secondary buttons" type="button" value="0" onclick="display('0')" /> </td>
-                                        <td> <input class="btn btn-success buttons" type="submit" value="SAVE" onclick="calculate()" id="btn" /> </td>
+                                        <td> <input class="btn btn-success buttons" type="submit" value="SAVE" onclick="calculate()" id="btn" /></td>
                                         <td> <input class="btn btn-danger buttons" type="button" value="CLEAR" onclick="clearScreen()" /> </td>
                                     </tr>
                                 </table>
@@ -83,7 +83,7 @@
                         <h3 class="card-title">TIMER SETTINGS</h3>
                     </div>
                     <div class="card-content">
-                        <h4 class="mt-4">TIME (SEC) : <span><a href=""><img src="assets/icons/MINUS.png"  width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" id="black_display" disabled>   <a type="button" onclick="addblack()"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
+                        <h4 class="mt-4">TIME (SEC) : <span><a type="button" id="minusTime"><img src="assets/icons/MINUS.png"  width="20" alt=""></span></a>  <input type="text" class="w-25 text-center" value="0" id="time_display" disabled>   <a type="button" id="addTime"><span><img src="assets/icons/PLUS.png" width="20" alt=""></span></a></h4>
                         <br>
                          <div class="text-center mt-4">
                              <button class="btn btn-success">SAVE</button>
@@ -120,9 +120,6 @@
                 </div>
                 </div>
             </div>
-
-
-
         </div>
       </div>
 
