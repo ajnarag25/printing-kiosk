@@ -1,0 +1,8 @@
+# CHANGED THE ALLOWED HOST IN SETTING.PY:
+    - ALLOWED_HOSTS = ['127.0.0.1', 'current i.p address of the device', 'localhost']
+    
+# USE THIS IN COMMAND LINE TO RUN A SERVER:
+    - python manage.py runserver 0.0.0.0:8000
+
+# AFTER RUNNING THE SERVER USE THIS URL:
+    - http://current_i.p_address_of_the_device:8000/
