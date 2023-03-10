@@ -13,7 +13,8 @@
 <body>
     <div class="p-5">
         <div class="navbar">
-            <h3><?php echo  date("l, F d, Y") ?></h3>
+            {% load tz %}
+            <h3>{% now "l, F j, Y" %}</h3>
             <div class="d-flex">
                 <h3>
                     <span id="LiveTime" class=""></span>
