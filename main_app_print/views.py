@@ -6,11 +6,11 @@ import requests
 import json
 import os
 import subprocess
+from django.contrib import messages
 # import json
 # from .models import *
 # from .forms import *
 # from django.contrib.auth import authenticate, login, logout
-# from django.contrib import messages
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.views import PasswordChangeView
 # from django.urls import reverse_lazy
@@ -43,6 +43,10 @@ def login_admin(request):
 
 def user_print(request):
     return render(request, "user_print.html")
+
+def loader(request):
+    return render(request, "loader.html")
+
 
 def user_select(request):
     if request.method == 'POST':
@@ -81,13 +85,15 @@ def user_select(request):
                 with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
                     for chunk in response.iter_content(chunk_size=8096):
                         fd.write(chunk)
-                    return redirect ('user_print')
+                    return redirect ('loader')
                     # else:
                     #     print(response.text)
                     #     exit()
             else:
+                messages.info(request,'Error uploading file')
                 print('error uploading file')
         else:
+            messages.info(request,'Error uploading file')
             print('error uploading file')
     else:
         form = UploadFileForm()

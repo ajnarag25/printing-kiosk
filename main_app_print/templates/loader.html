@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'assets/tup-logo.png'%}" rel="icon">
+    <title>Loading</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/loader.css'%}">
+</head>
+<body>
+    <div class="gooey" id="loader">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <br>
+        <center>
+          <h6 id="change-text">Uploading your file...</h6>
+         </center>
+    </div>
+
+
+    <script src="{% static 'js/jquery.js'%}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+    <script>
+      const textElement = document.querySelector('#change-text');
+      const texts = ['Checking your file...', 'Making sure your file will be converted', 'Please wait for a moment...','Uploading your file...'];
+      let counter = 0;
+      const delay = 2000; // 1000 milliseconds = 1 second
+      const transitionDuration = 1; // 0.5 seconds
+
+      setInterval(function() {
+      textElement.classList.add('fade-out');
+      setTimeout(function() {
+          textElement.textContent = texts[counter];
+          textElement.classList.remove('fade-in');
+          counter = (counter + 1) % texts.length;
+      }, transitionDuration * 1000); // convert seconds to milliseconds
+      }, delay);
+
+      setTimeout(function() {
+          window.location.href = "{% url 'user_print' %}"; // change URL to desired destination
+        }, 7000);
+    </script>
+    
+</body>
+</html>

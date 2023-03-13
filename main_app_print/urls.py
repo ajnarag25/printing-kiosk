@@ -11,6 +11,6 @@ urlpatterns = [
     path('login_admin/', views.login_admin, name="login_admin"),
     path('user_print/', views.user_print, name="user_print"),
     path('user_select/', views.user_select, name="user_select"),
-    # path('convert_file/', views.convert_api, name="convert_api")
+    path('loader/', views.loader, name="loader"),
 ]
 
