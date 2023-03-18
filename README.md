@@ -1,4 +1,4 @@
-# printing_kiosk
+# printing_kiosk_system
 
 This project is all about developing a self-service printing kiosk that can help students
 in their daily routine in the university whenever the other printing services inside or near
