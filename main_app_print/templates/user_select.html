@@ -1,52 +1,64 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'assets/tup-logo.png'%}" rel="icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'assets/tup-logo.png'%}" rel="icon" />
     <title>Printing Kiosk</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
-    <link rel="stylesheet" href="{% static 'css/custom_style.css'%}">
-    <link rel="stylesheet" href="{% static 'css/loader.css'%}">
-</head>
-<style>
-    .gooey{
-        display:none;
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/custom_style.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/loader.css'%}" />
+  </head>
+  <style>
+    .gooey {
+      display: none;
     }
-</style>
-<body>
+  </style>
+  <body>
     <div class="p-5" id="upload_main">
-        <div class="navbar">
-            {% load tz %}
-            <h3>{% now "l, F j, Y" %}</h3>
-            <div class="d-flex">
-                <h3>
-                    <span id="LiveTime" class=""></span>
-                </h3>
-            </div>
-        </div>
-        <a href="{% url 'home_user' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
-            <img src="{% static 'assets/icons/BACK.png'%}" width="50" alt="">
-        </a>
-        <div class="text-center header-space">
-            <h1 class="title-user">Upload your file</h1>
-            <br>
-            <button class="img-upload" id="upload-img">
-                <img class="img-upload-resize" src="{% static 'assets/icons/UPLOAD.png'%}" width="300" alt="">
-            </button>
-            <div class="input-hidden">
-                <form id="upload-form" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="file" id="uploadfile" name="uploaded_file"/> 
-                </form>
-
-            </div>
-            <h3>Click the icon to upload your file</h3>
-            <p>If you are using your phone to upload your file please go to this link: <b class="text-primary">192.168.1.8/printing_kiosk/user_select</b></p>
+      <div class="navbar">
+        {% load tz %}
+        <h3>{% now "l, F j, Y" %}</h3>
+        <div class="d-flex">
+          <h3>
+            <span id="LiveTime" class=""></span>
+          </h3>
         </div>
       </div>
+      <a
+        href="{% url 'home_user' %}"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Back"
+      >
+        <img src="{% static 'assets/icons/BACK.png'%}" width="50" alt="" />
+      </a>
+      <div class="text-center header-space">
+        <h1 class="title-user">Upload your file</h1>
+        <br />
+        <button class="img-upload" id="upload-img">
+          <img
+            class="img-upload-resize"
+            src="{% static 'assets/icons/UPLOAD.png'%}"
+            width="300"
+            alt=""
+          />
+        </button>
+        <div class="input-hidden">
+          <form id="upload-form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="uploadfile" name="uploaded_file" />
+          </form>
+        </div>
+        <h3>Click the icon to upload your file</h3>
+        <p>
+          If you are using your phone to upload your file please go to this
+          link: <b class="text-primary">{{ipadd}}/user_select</b>
+        </p>
+      </div>
+    </div>
 
     <script src="{% static 'js/jquery.js'%}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
@@ -54,12 +66,11 @@
     <script src="{% static 'js/sweetalert.js'%}"></script>
     {% for message in messages %}
     <script>
-        Swal.fire({
-            title: '{{message}}',
-            confirmButtonColor: '#d33',
-            })
+      Swal.fire({
+        title: "{{message}}",
+        confirmButtonColor: "#d33",
+      });
     </script>
     {% endfor %}
-
-</body>
+  </body>
 </html>

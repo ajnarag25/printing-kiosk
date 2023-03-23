@@ -7,7 +7,8 @@ import json
 import os
 import subprocess
 from django.contrib import messages
-#fsdlkfjsdlkfajsdklf
+import socket
+# fsdlkfjsdlkfajsdklf
 # import json
 # from .models import *
 # from .forms import *
@@ -33,23 +34,30 @@ from django.contrib import messages
 def index(request):
     return render(request, "index.html")
 
+
 def home_user(request):
     return render(request, "home_user.html")
+
 
 def home_admin(request):
     return render(request, "home_admin.html")
 
+
 def login_admin(request):
     return render(request, "login_admin.html")
 
+
 def user_print(request):
     return render(request, "user_print.html")
+
 
 def loader(request):
     return render(request, "loader.html")
 
 
 def user_select(request):
+    hostname = socket.gethostname()
+    IPAddr = socket.gethostbyname(hostname)
     if request.method == 'POST':
         filename = request.FILES['uploaded_file']
         name_file = os.path.splitext(str(filename))[0]
@@ -58,48 +66,45 @@ def user_select(request):
             form.save()
             directory_path = 'uploads/'
             files = os.listdir(directory_path)
-            files.sort(key=lambda x: os.path.getmtime(os.path.join(directory_path, x)))
+            files.sort(key=lambda x: os.path.getmtime(
+                os.path.join(directory_path, x)))
             latest_file = files[-1]
             instructions = {
                 'parts': [
                     {
-                    'file': 'document'
+                        'file': 'document'
                     }
                 ]
             }
             response = requests.request(
                 'POST',
                 'https://api.pspdfkit.com/build',
-                headers = {
+                headers={
                     'Authorization': 'Bearer pdf_live_fks3MaKwGQAaRm6H1atpHAGJalfmNAXLqorSmjhf6HX'
                 },
-                files = {
+                files={
                     'document': open('uploads/'+str(latest_file), 'rb')
                 },
-                data = {
+                data={
                     'instructions': json.dumps(instructions)
                 },
-                stream = True
+                stream=True
             )
 
             if response.ok:
                 with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
                     for chunk in response.iter_content(chunk_size=8096):
                         fd.write(chunk)
-                    return redirect ('loader')
+                    return redirect('loader')
                     # else:
                     #     print(response.text)
                     #     exit()
             else:
-                messages.info(request,'Error uploading file')
+                messages.info(request, 'Error uploading file')
                 print('error uploading file')
         else:
-            messages.info(request,'Error uploading file')
+            messages.info(request, 'Error uploading file')
             print('error uploading file')
     else:
         form = UploadFileForm()
-    return render(request, 'user_select.html', {'form': form})
-
-
-
-
+    return render(request, 'user_select.html', {'form': form, 'ipadd': IPAddr})
