@@ -14,6 +14,8 @@ GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
 GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
 import subprocess
 from pdf2docx import parse
+from docx2pdf import convert
+
 # fsdlkfjsdlkfajsdklf
 # import json
 # from .models import *
@@ -117,19 +119,19 @@ def user_select(request):
 
 def print_option(request):
     if request.method == 'POST':
-        path = "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\uploads\\sheeesh.pdf"
+        pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
+        docx_path = "docx_mod.docx"
+        parse(pdf_path, docx_path)
+        #back to pdf and then preview
+        convert("docx_mod.docx","C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
+
+        
         printer_name = request.POST.get('printer_name')
         copies = request.POST.get('copies')
         size = request.POST.get('size')
         orientation = request.POST.get('orientation')
-        rangee = request.POST.get('rangee')
-        a= 1
-        b=2
-        print("ffdfdf")
-        if a == 1:
-            print("dsfasfsdf")
-        if b == 2:
-            print("fsdafsdafsadf")
+        rangee = request.POST.get('rangee') 
+        
         return redirect("loader_convert_docx")
         
         # currentprinter = win32print.GetDefaultPrinter()
@@ -143,13 +145,10 @@ def print_option(request):
     return render(request,'printing_options.html')
 
 def print_preview(request):
-    fle = "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\uploads\\sheeesh.pdf"
-    context = {'fle' : fle,
-               }
-    print(context)
-    return render(request,'print_preview.html',context)
+    return render(request,'print_preview.html')
 
 def print_pay(request):
     return render(request,'pay.html')
+
 def loader_convert_docx(request):
     return render(request,'loader_convert_docx.html')
