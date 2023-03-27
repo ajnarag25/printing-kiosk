@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'assets/tup-logo.png'%}" rel="icon">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'css/custom_style.css' %}">
+  <title>Print Options</title>
+</head>
+<body>
+    <div class="p-5">
+        <a href="{% url 'print_option' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
+          <img src="{% static 'assets/icons/BACK.png'%}" width="50" alt="">
+        </a>
+    </div>
+  <div class="container">
+    <h1 class="text-center">Pay Before Print</h1>
+    <div class="row text-center ">
+        
+        <div class="col">
+            <br><br>
+            <h3><strong>Total print cost:</strong> <span>₱ 11.00</span></h3>
+            
+            <h3><strong>Amount Inserted:</strong> <span>₱ 20.00</span></h3>
+            <br><br>
+            <p class="text-danger">Remember: Please check the inserted number
+                of papers before printing. Admins are not liable fo any missing pages or lacking of pages.
+            </p>
+        </div>
+        <div class="col">
+            <br><br>
+            <h3><span><span><img src="{% static 'assets/icons/clock.png'%}" width="50px" height="50px" alt=""></span><strong>Time Remaining:</strong></h3>
+                <h2><strong>00:15 </strong></h2>
+            
+            
+        </div>
+    </div>
+
+  </div> 
+
+<br>
+<br>
+<br>
+<br>
+
+  <footer id="footer-pos">
+    <div class="p-5">
+      <div class="footer-bottom justify-content-center">
+          <div class="row">
+            <button type="button" class="btn btn-primary btn-lg btn-block">Print</button>
+          </div>
+          
+      </div>
+  </div>
+  </footer>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="{% static 'js/jquery.js'%}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'js/functions.js'%}"></script>
+</body>
+</html>

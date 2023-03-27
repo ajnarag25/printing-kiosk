@@ -8,6 +8,12 @@ import os
 import subprocess
 from django.contrib import messages
 import socket
+import win32print
+import win32api
+GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
+GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
+import subprocess
+from pdf2docx import parse
 # fsdlkfjsdlkfajsdklf
 # import json
 # from .models import *
@@ -108,3 +114,42 @@ def user_select(request):
     else:
         form = UploadFileForm()
     return render(request, 'user_select.html', {'form': form, 'ipadd': IPAddr})
+
+def print_option(request):
+    if request.method == 'POST':
+        path = "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\uploads\\sheeesh.pdf"
+        printer_name = request.POST.get('printer_name')
+        copies = request.POST.get('copies')
+        size = request.POST.get('size')
+        orientation = request.POST.get('orientation')
+        rangee = request.POST.get('rangee')
+        a= 1
+        b=2
+        print("ffdfdf")
+        if a == 1:
+            print("dsfasfsdf")
+        if b == 2:
+            print("fsdafsdafsadf")
+        return redirect("loader_convert_docx")
+        
+        # currentprinter = win32print.GetDefaultPrinter()
+        # currentprinter = printer_name
+        # rangee_obj = "-"+str(rangee)
+        # orientation = "-" + str(orientation)
+
+        # params = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+currentprinter+'" -all -portrait -copies 1 "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\main_app_print\\COLORED_PAGE.pdf"'
+
+        # win32api.ShellExecute(0, 'open', GSPRINT_PATH, params, '.',0)
+    return render(request,'printing_options.html')
+
+def print_preview(request):
+    fle = "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\uploads\\sheeesh.pdf"
+    context = {'fle' : fle,
+               }
+    print(context)
+    return render(request,'print_preview.html',context)
+
+def print_pay(request):
+    return render(request,'pay.html')
+def loader_convert_docx(request):
+    return render(request,'loader_convert_docx.html')
