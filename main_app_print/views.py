@@ -8,6 +8,14 @@ import os
 import subprocess
 from django.contrib import messages
 import socket
+import win32print
+import win32api
+GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
+GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
+import subprocess
+from pdf2docx import parse
+from docx2pdf import convert
+
 # fsdlkfjsdlkfajsdklf
 # import json
 # from .models import *
@@ -108,3 +116,39 @@ def user_select(request):
     else:
         form = UploadFileForm()
     return render(request, 'user_select.html', {'form': form, 'ipadd': IPAddr})
+
+def print_option(request):
+    if request.method == 'POST':
+        pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
+        docx_path = "docx_mod.docx"
+        parse(pdf_path, docx_path)
+        #back to pdf and then preview
+        convert("docx_mod.docx","C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
+
+        
+        printer_name = request.POST.get('printer_name')
+        copies = request.POST.get('copies')
+        size = request.POST.get('size')
+        orientation = request.POST.get('orientation')
+        rangee = request.POST.get('rangee') 
+        
+        return redirect("loader_convert_docx")
+        
+        # currentprinter = win32print.GetDefaultPrinter()
+        # currentprinter = printer_name
+        # rangee_obj = "-"+str(rangee)
+        # orientation = "-" + str(orientation)
+
+        # params = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+currentprinter+'" -all -portrait -copies 1 "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\main_app_print\\COLORED_PAGE.pdf"'
+
+        # win32api.ShellExecute(0, 'open', GSPRINT_PATH, params, '.',0)
+    return render(request,'printing_options.html')
+
+def print_preview(request):
+    return render(request,'print_preview.html')
+
+def print_pay(request):
+    return render(request,'pay.html')
+
+def loader_convert_docx(request):
+    return render(request,'loader_convert_docx.html')

@@ -12,5 +12,10 @@ urlpatterns = [
     path('user_print/', views.user_print, name="user_print"),
     path('user_select/', views.user_select, name="user_select"),
     path('loader/', views.loader, name="loader"),
+    path('print_option/', views.print_option, name="print_option"),
+    path('print_preview/', views.print_preview, name="print_preview"),
+    path('print_pay/', views.print_pay, name="print_pay"),
+    path('loader_convert_docx/', views.loader_convert_docx, name="loader_convert_docx"),
+
 ]
 
