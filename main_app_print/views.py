@@ -13,7 +13,8 @@ import win32api
 import subprocess
 from pdf2docx import parse
 from docx2pdf import convert
-
+import docx
+from docx.enum.section import WD_ORIENT
 # fsdlkfjsdlkfajsdklf
 # import json
 # from .models import *
