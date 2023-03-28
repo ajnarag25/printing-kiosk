@@ -119,12 +119,12 @@ def user_select(request):
 
 def print_option(request):
     if request.method == 'POST':
-        pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
-        # pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
+        #pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
+        pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
         docx_path = "docx_mod.docx"
         parse(pdf_path, docx_path)
         # back to pdf and then preview
-
+        
         printer_name = request.POST.get('printer_name')
         copies = request.POST.get('copies')
         size = request.POST.get('size')
