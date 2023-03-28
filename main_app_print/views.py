@@ -10,11 +10,11 @@ from django.contrib import messages
 import socket
 import win32print
 import win32api
-GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
-GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
 import subprocess
 from pdf2docx import parse
 from docx2pdf import convert
+GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
+GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
 
 # fsdlkfjsdlkfajsdklf
 # import json
