@@ -13,8 +13,6 @@ import win32api
 import subprocess
 from pdf2docx import parse
 from docx2pdf import convert
-GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
-GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
 
 # fsdlkfjsdlkfajsdklf
 # import json
@@ -117,23 +115,69 @@ def user_select(request):
         form = UploadFileForm()
     return render(request, 'user_select.html', {'form': form, 'ipadd': IPAddr})
 
+
 def print_option(request):
     if request.method == 'POST':
         pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
+        # pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
         docx_path = "docx_mod.docx"
         parse(pdf_path, docx_path)
-        #back to pdf and then preview
-        convert("docx_mod.docx","C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
+        # back to pdf and then preview
 
-        
         printer_name = request.POST.get('printer_name')
         copies = request.POST.get('copies')
         size = request.POST.get('size')
-        orientation = request.POST.get('orientation')
-        rangee = request.POST.get('rangee') 
-        
+        color_mode = request.POST.get('color_mode')
+        orientationn = request.POST.get('orientation')
+        rangee = request.POST.get('rangee')
+        custom_range = request.POST.get('custom_range')
+
+        official_range = ""
+        if rangee == "custom":
+            official_range = custom_range
+        else:
+            official_range = rangee
+
+        doc = docx.Document(docx_path)
+        section_size = doc.sections[0]
+        sections_orientation = doc.sections
+
+        # for customizing the paper sizes
+        if size == "letter":
+            section_size.page_width = docx.shared.Inches(8.5)
+            section_size.page_height = docx.shared.Inches(11)
+        elif size == "a4":
+            section_size.page_width = docx.shared.Inches(8.27)
+            section_size.page_height = docx.shared.Inches(11.69)
+        elif size == "executive":
+            section_size.page_width = docx.shared.Inches(7.25)
+            section_size.page_height = docx.shared.Inches(10.5)
+        elif size == "legal":
+            section_size.page_width = docx.shared.Inches(8.5)
+            section_size.page_height = docx.shared.Inches(14)
+
+        for section in sections_orientation:
+            if orientationn == "landscape":
+                if section.orientation == WD_ORIENT.PORTRAIT:
+                    section.orientation = WD_ORIENT.LANDSCAPE
+                    new_width, new_height = section.page_height, section.page_width
+                    section.page_width = new_width
+                    section.page_height = new_height
+                else:
+                    pass
+            elif orientationn == "portrait":
+                if section.orientation == WD_ORIENT.LANDSCAPE:
+                    section.orientation = WD_ORIENT.PORTRAIT
+                    new_width, new_height = section.page_height, section.page_width
+                    section.page_width = new_width
+                    section.page_height = new_height
+                else:
+                    pass
+
+        doc.save(docx_path)
+
+        convert(docx_path, "C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
         return redirect("loader_convert_docx")
-        
         # currentprinter = win32print.GetDefaultPrinter()
         # currentprinter = printer_name
         # rangee_obj = "-"+str(rangee)
@@ -142,13 +186,17 @@ def print_option(request):
         # params = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+currentprinter+'" -all -portrait -copies 1 "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\main_app_print\\COLORED_PAGE.pdf"'
 
         # win32api.ShellExecute(0, 'open', GSPRINT_PATH, params, '.',0)
-    return render(request,'printing_options.html')
+    return render(request, 'printing_options.html')
 
-def print_preview(request):
-    return render(request,'print_preview.html')
+
+def print_preview(request, color_mode):
+    context = {'color_mode': color_mode}
+    return render(request, 'print_preview.html', context)
+
 
 def print_pay(request):
-    return render(request,'pay.html')
+    return render(request, 'pay.html')
+
 
 def loader_convert_docx(request):
-    return render(request,'loader_convert_docx.html')
+    return render(request, 'loader_convert_docx.html')

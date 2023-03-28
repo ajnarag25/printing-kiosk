@@ -20,6 +20,7 @@
         </div>
         <br>
         <center>
+        
           <h6 id="change-text">Loading...</h6>
          </center>
     </div>
@@ -29,7 +30,7 @@
     <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
     <script>
       const textElement = document.querySelector('#change-text');
-      const texts = ['Checking your file...', 'Rendering Print Preview...', 'Please wait for a moment...','Opening Print Preview...'];
+      const texts = ['Analyzing document...', 'Parsing pages...', 'Please wait for a moment...','Opening Print Preview...'];
       let counter = 0;
       const delay = 3000; // 1000 milliseconds = 1 second
       const transitionDuration = 1; // 0.5 seconds
@@ -44,7 +45,7 @@
       }, delay);
 
       setTimeout(function() {
-          window.location.href = "{% url 'print_preview' %}"; // change URL to desired destination
+          window.location.href = "{% url 'print_preview' 'colored' %}"; // change URL to desired destination
         }, 16000);
     </script>
     
