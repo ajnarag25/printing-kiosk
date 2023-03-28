@@ -23,7 +23,7 @@
 </div>
   <div class="container">
     <h1 class="text-center mb-5">Print Option Form</h1>
-      <form id="print_option_form" method="post">
+      <form id="print_option_form" method="post" >
         {% csrf_token %}
         <div class="form-group-sm">
           
@@ -35,14 +35,14 @@
           
           <label for="orientation">Size:</label>
           <select class="form-control" name="size" id="orientation">
-            <option>Letter</option>
-            <option>A4</option>
-            <option>Executive</option>
-            <option>Legal</option>
+            <option value="letter">Letter</option>
+            <option value="a4">A4</option>
+            <option value="executive">Executive</option>
+            <option value="legal">Legal</option>
           </select>
 
           <label for="orientation">Color Mode:</label>
-          <select class="form-control" name="size" id="color_mode">
+          <select class="form-control" name="color_mode" id="color_mode">
             <option>Colored</option>
             <option>Grayscale</option>
           </select>
@@ -86,8 +86,8 @@
         <button type="button" class="btn btn-danger">Back</button>
 
           <div class="d-flex">
-              <button type="submit" class="btn btn-primary" form="print_option_form">Prceed to Preview</button>
-            <!-- <a class="btn btn-primary" href="{% url 'loader_convert_docx' %}">Proceed to Preview</a> -->
+              <button type="submit"  class="btn btn-primary" form="print_option_form">Proceed to Preview</button>
+            <!-- <a class="btn btn-primary" href="{% url 'loader_convert_docx' %}?printer_name={{printer_name}}&copies={{copies}}&size={{size}}&orientation={{orientation}}&rangee={{rangee}}&custom_range={{custom_range}}">Proceed to Preview</a> -->
 
           </div>
       </div>
