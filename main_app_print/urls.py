@@ -16,6 +16,5 @@ urlpatterns = [
     path('print_preview/<color_mode>/', views.print_preview, name="print_preview"),
     path('print_pay/', views.print_pay, name="print_pay"),
     path('loader_convert_docx/', views.loader_convert_docx, name="loader_convert_docx"),
-
 ]
 

@@ -161,16 +161,23 @@ def print_option(request):
             section_size.page_height = docx.shared.Inches(14)
         
         for section in sections_orientation:
-            if orientationn == "portrait":
-                section.orientation = WD_ORIENT.LANDSCAPE
-                new_width, new_height = section.page_height, section.page_width
-                section.page_width = new_width
-                section.page_height = new_height
-            elif orientationn == "landscape":
-                section.orientation = WD_ORIENT.PORTRAIT
-                new_width, new_height = section.page_height, section.page_width
-                section.page_width = new_width
-                section.page_height = new_height
+            if orientationn == "landscape":
+                if section.orientation == WD_ORIENT.PORTRAIT:
+                    section.orientation = WD_ORIENT.LANDSCAPE
+                    new_width, new_height = section.page_height, section.page_width
+                    section.page_width = new_width
+                    section.page_height = new_height
+                else:
+                    pass
+            elif orientationn == "portrait":
+                if section.orientation == WD_ORIENT.LANDSCAPE:
+                    section.orientation = WD_ORIENT.PORTRAIT
+                    new_width, new_height = section.page_height, section.page_width
+                    section.page_width = new_width
+                    section.page_height = new_height
+                else:
+                    pass
+                
         doc.save(docx_path)
 
         convert(docx_path,"C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
