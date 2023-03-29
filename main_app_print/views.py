@@ -13,7 +13,8 @@ import win32api
 import subprocess
 from pdf2docx import parse
 from docx2pdf import convert
-
+import docx
+from docx.enum.section import WD_ORIENT
 # fsdlkfjsdlkfajsdklf
 # import json
 # from .models import *
@@ -118,8 +119,8 @@ def user_select(request):
 
 def print_option(request):
     if request.method == 'POST':
-        pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
-        # pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
+        # pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
+        pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
         docx_path = "docx_mod.docx"
         parse(pdf_path, docx_path)
         # back to pdf and then preview
