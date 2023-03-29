@@ -1,38 +1,53 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="{% static 'assets/tup-logo.png'%}" rel="icon">
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
-  <link rel="stylesheet" href="{% static 'css/custom_style.css'%}">
-  <title>Print Options</title>
-</head>
-<body>
-  <div class="p-5">
-    <div class="navbar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static 'assets/tup-logo.png'%}" rel="icon" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/custom_style.css'%}" />
+    <title>Print Options</title>
+  </head>
+  <body>
+    <div class="p-5">
+      <div class="navbar">
         {% load tz %}
         <h3>{% now "l, F j, Y" %}</h3>
         <div class="d-flex">
-            <h3>
-                <span id="LiveTime" class=""></span>
-            </h3>
+          <h3>
+            <span id="LiveTime" class=""></span>
+          </h3>
         </div>
+      </div>
     </div>
-</div>
-  <div class="container">
-    <h1 class="text-center mb-5">Print Option Form</h1>
-      <form id="print_option_form" method="post" >
+    <div class="container">
+      <h1 class="text-center mb-5">Print Option Form</h1>
+      <form id="print_option_form" method="post">
         {% csrf_token %}
         <div class="form-group-sm">
-          
           <label for="printerName">Printer Name:</label>
-          <input type="text" class="form-control" name="printer_name" id="printerName" value="Brother-DCP-T500W-Printer" readonly>
-          
+          <input
+            type="text"
+            class="form-control"
+            name="printer_name"
+            id="printerName"
+            value="Brother-DCP-T500W-Printer"
+            readonly
+          />
+
           <label for="copies">Number of Copies:</label>
-          <input type="number" class="form-control" name="copies" id="copies" placeholder="Enter number of copies" min="1" max="5" value="1">
-          
+          <input
+            type="number"
+            class="form-control"
+            name="copies"
+            id="copies"
+            placeholder="Enter number of copies"
+            min="1"
+            max="5"
+            value="1"
+          />
+
           <label for="orientation">Size:</label>
           <select class="form-control" name="size" id="orientation">
             <option value="letter">Letter</option>
@@ -63,9 +78,14 @@
 
           <div class="form-group d-none" id="customRange">
             <label for="customRange">Custom Range:</label>
-            <input type="text" class="form-control" name="custom_range" id="customRange" placeholder="Enter custom range(Ex: 1-3)">
+            <input
+              type="text"
+              class="form-control"
+              name="custom_range"
+              id="customRange"
+              placeholder="Enter custom range(Ex: 1-3)"
+            />
           </div>
-          
         </div>
 
         <!-- <div class="row">
@@ -77,40 +97,46 @@
             <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
           </div>
         </div> -->
-        
       </form>
     </div>
-  <footer>
-    <div class="p-5">
-      <div class="navbar">
-        <button type="button" class="btn btn-danger">Back</button>
+    <footer>
+      <div class="p-5">
+        <div class="navbar">
+          <a href="{% url 'user_select' %}" type="button" class="btn btn-danger"
+            >Back</a
+          >
 
           <div class="d-flex">
-              <button type="submit"  class="btn btn-primary" form="print_option_form">Proceed to Preview</button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              form="print_option_form"
+            >
+              Proceed to Preview
+            </button>
             <!-- <a class="btn btn-primary" href="{% url 'loader_convert_docx' %}?printer_name={{printer_name}}&copies={{copies}}&size={{size}}&orientation={{orientation}}&rangee={{rangee}}&custom_range={{custom_range}}">Proceed to Preview</a> -->
-
           </div>
+        </div>
       </div>
-  </div>
-  </footer>
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <!-- Bootstrap JS -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script>
-    $(function() {
-      $('#range').change(function(){
-        if ($(this).val() == 'custom') {
-          $('#customRange').removeClass('d-none');
-        } else {
-          $('#customRange').addClass('d-none');
-        }
+    </footer>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(function () {
+        $("#range").change(function () {
+          if ($(this).val() == "custom") {
+            $("#customRange").removeClass("d-none");
+          } else {
+            $("#customRange").addClass("d-none");
+          }
+        });
       });
-    });
-  </script>
+    </script>
 
-<script src="{% static 'js/jquery.js'%}"></script>
-<script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
-<script src="{% static 'js/functions.js'%}"></script>
-</body>
+    <script src="{% static 'js/jquery.js'%}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+    <script src="{% static 'js/functions.js'%}"></script>
+  </body>
 </html>
