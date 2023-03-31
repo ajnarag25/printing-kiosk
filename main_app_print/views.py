@@ -47,7 +47,41 @@ def home_user(request):
 
 @login_required(login_url='login_admin')
 def home_admin(request):
-    return render(request, "home_admin.html")
+    view_prices = admin_price.objects.filter(id=1).values()
+    view_timer = admin_timer.objects.values()
+    get_black = request.POST.get('black')
+    get_colored = request.POST.get('colored')
+    get_timer = request.POST.get('time')
+    if request.method == 'POST' and get_black != None and get_colored != None:
+        if admin_price.objects.filter(black=get_black, colored=get_colored).exists():
+            messages.info(request, 'No Changes Detected')
+        elif int(get_black) <= 0 or int(get_colored) <= 0:
+            messages.info(
+                request, 'Please do not set a value equal to 0 or below')
+        else:
+            admin_price.objects.filter(id=1).update(
+                black=get_black, colored=get_colored)
+            messages.info(request, 'Successfully Update the Price')
+            return redirect('home_admin')
+
+    if request.method == 'POST' and get_timer != None:
+        if admin_timer.objects.filter(time=get_timer).exists():
+            messages.info(request, 'No Changes Detected')
+        elif int(get_timer) <= 0:
+            messages.info(
+                request, 'Please do not set a value equal to 0 or below')
+        else:
+            admin_timer.objects.filter(id=1).update(
+                time=get_timer)
+            messages.info(request, 'Successfully Update the Timer')
+            return redirect('home_admin')
+
+    context = {
+        'prices': view_prices,
+        'timer': view_timer
+    }
+
+    return render(request, "home_admin.html", context)
 
 
 def login_admin(request):
@@ -217,3 +251,8 @@ def print_pay(request):
 
 def loader_convert_docx(request):
     return render(request, 'loader_convert_docx.html')
+
+
+def logout_admin(request):
+    logout(request)
+    return redirect('login_admin')

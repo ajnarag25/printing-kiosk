@@ -68,7 +68,7 @@
     <script src="{% static 'js/jquery.js'%}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
     <script src="{% static 'js/functions.js'%}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/sweetalert.js'%}"></script>
     {% for message in messages %}
     <script>
         Swal.fire({
