@@ -124,7 +124,7 @@ def print_option(request):
         docx_path = "docx_mod.docx"
         parse(pdf_path, docx_path)
         # back to pdf and then preview
-        
+
         printer_name = request.POST.get('printer_name')
         copies = request.POST.get('copies')
         size = request.POST.get('size')
@@ -156,7 +156,7 @@ def print_option(request):
         elif size == "legal":
             section_size.page_width = docx.shared.Inches(8.5)
             section_size.page_height = docx.shared.Inches(14)
-
+        
         for section in sections_orientation:
             if orientationn == "landscape":
                 if section.orientation == WD_ORIENT.PORTRAIT:
