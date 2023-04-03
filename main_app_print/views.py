@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import UploadFileForm
 import requests
 import json
 import os
@@ -16,18 +15,18 @@ from docx2pdf import convert
 import docx
 from docx.enum.section import WD_ORIENT
 # fsdlkfjsdlkfajsdklf
-# import json
-# from .models import *
-# from .forms import *
-# from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth.decorators import login_required
-# from django.contrib.auth.views import PasswordChangeView
-# from django.urls import reverse_lazy
-# from django.core.mail import send_mail
-# from django.contrib.auth.hashers import check_password
-# from django.core import serializers
-# from django.http import JsonResponse
-# from django.utils.timezone import datetime
+import json
+from .models import *
+from .forms import *
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.core.mail import send_mail
+from django.contrib.auth.hashers import check_password
+from django.core import serializers
+from django.http import JsonResponse
+from django.utils.timezone import datetime
 
 # from datetime import date
 # from docx import Document
@@ -46,11 +45,62 @@ def home_user(request):
     return render(request, "home_user.html")
 
 
+@login_required(login_url='login_admin')
 def home_admin(request):
-    return render(request, "home_admin.html")
+    view_prices = admin_price.objects.filter(id=1).values()
+    view_timer = admin_timer.objects.values()
+    get_black = request.POST.get('black')
+    get_colored = request.POST.get('colored')
+    get_timer = request.POST.get('time')
+    if request.method == 'POST' and get_black != None and get_colored != None:
+        if admin_price.objects.filter(black=get_black, colored=get_colored).exists():
+            messages.info(request, 'No Changes Detected')
+        elif int(get_black) <= 0 or int(get_colored) <= 0:
+            messages.info(
+                request, 'Please do not set a value equal to 0 or below')
+        else:
+            admin_price.objects.filter(id=1).update(
+                black=get_black, colored=get_colored)
+            messages.info(request, 'Successfully Update the Price')
+            return redirect('home_admin')
+
+    if request.method == 'POST' and get_timer != None:
+        if admin_timer.objects.filter(time=get_timer).exists():
+            messages.info(request, 'No Changes Detected')
+        elif int(get_timer) <= 0:
+            messages.info(
+                request, 'Please do not set a value equal to 0 or below')
+        else:
+            admin_timer.objects.filter(id=1).update(
+                time=get_timer)
+            messages.info(request, 'Successfully Update the Timer')
+            return redirect('home_admin')
+
+    context = {
+        'prices': view_prices,
+        'timer': view_timer
+    }
+
+    return render(request, "home_admin.html", context)
 
 
 def login_admin(request):
+    if request.user.is_authenticated:
+        return redirect('home_admin')
+    elif request.POST.get('admin_password') == '':
+        messages.info(request, 'Please Enter your Password!')
+    else:
+        if request.method == 'POST':
+            passw = request.POST.get('admin_password')
+            user = authenticate(request, username='admin', password=passw)
+
+            if user is not None:
+                login(request, user)
+                return redirect('home_admin')
+
+            else:
+                messages.info(request, 'Password is Incorrect!')
+
     return render(request, "login_admin.html")
 
 
@@ -119,7 +169,7 @@ def user_select(request):
 
 def print_option(request):
     if request.method == 'POST':
-        #pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
+        # pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
         pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
         docx_path = "docx_mod.docx"
         parse(pdf_path, docx_path)
@@ -201,3 +251,8 @@ def print_pay(request):
 
 def loader_convert_docx(request):
     return render(request, 'loader_convert_docx.html')
+
+
+def logout_admin(request):
+    logout(request)
+    return redirect('login_admin')
