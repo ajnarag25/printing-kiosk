@@ -111,6 +111,9 @@ def user_print(request):
 def loader(request):
     return render(request, "loader.html")
 
+def mobile_upload(request):
+    return render(request, "mobile_upload.html")
+
 
 def user_select(request):
     hostname = socket.gethostname()
@@ -226,7 +229,6 @@ def print_option(request):
                     pass
 
         doc.save(docx_path)
-
         convert(docx_path, "C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
         return redirect("loader_convert_docx")
         # currentprinter = win32print.GetDefaultPrinter()
