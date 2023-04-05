@@ -77,12 +77,27 @@
                         <h3 class="card-title">PASSWORD SETTINGS</h3>
                     </div>
                     <div class="card-content">
-                        <form action="">
-                            <div class="input-group" id="show_hide_password">
-                                <input class="form-control custom-input" id="result" type="password" placeholder="Password" disabled required>      
-                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png'%}"  width="20" alt=""> <img id="open_eye" src="{% static 'assets/icons/OPEN_EYE.png'%}" width="20" alt=""></a>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="input-group" id="show_hide_password_1">
+                                <input class="form-control custom-input" id="result" type="password" name="old_password" onkeyup="this.value=this.value.replace(/[^\d]/,'')" placeholder="Enter Old Password" required>      
+                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye1" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png'%}"  width="20" alt=""> <img id="open_eye1" src="{% static 'assets/icons/OPEN_EYE.png'%}" width="20" alt=""></a>
                             </div>
-                            <center>
+                            <br>
+                            <div class="input-group" id="show_hide_password_2">
+                                <input class="form-control custom-input" id="result" type="password" name="new_password1" onkeyup="this.value=this.value.replace(/[^\d]/,'')" placeholder="Enter New Password" required>      
+                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye2" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png'%}"  width="20" alt=""> <img id="open_eye2" src="{% static 'assets/icons/OPEN_EYE.png'%}" width="20" alt=""></a>
+                            </div>
+                            <br>
+                            <div class="input-group" id="show_hide_password_3">
+                                <input class="form-control custom-input" id="result" type="password" name="new_password2" onkeyup="this.value=this.value.replace(/[^\d]/,'')" placeholder="Confirm Password" required>      
+                                <a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Toggle Password" style="text-align: none; color: black;"> <img id="closed_eye3" style="display:none" src="{% static 'assets/icons/CLOSED_EYE.png'%}"  width="20" alt=""> <img id="open_eye3" src="{% static 'assets/icons/OPEN_EYE.png'%}" width="20" alt=""></a>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-success w-50">SAVE</button>
+                            </div>
+                            <br>
+                            {% comment %} <center>
                                 <table class="calculator mt-5" >
                                     <tr>
                                         <td> <input class="btn btn-secondary buttons" type="button" value="1" onclick="display('1')" /> </td>
@@ -105,7 +120,7 @@
                                         <td> <input class="btn btn-danger buttons" type="button" value="CLEAR" onclick="clearScreen()" /> </td>
                                     </tr>
                                 </table>
-                            </center>
+                            </center> {% endcomment %}
                         </form>
                 
                 

@@ -27,6 +27,7 @@ from django.contrib.auth.hashers import check_password
 from django.core import serializers
 from django.http import JsonResponse
 from django.utils.timezone import datetime
+from .forms import CustomPasswordChangeForm
 
 # from datetime import date
 # from docx import Document
@@ -76,9 +77,26 @@ def home_admin(request):
             messages.info(request, 'Successfully Update the Timer')
             return redirect('home_admin')
 
+    form = CustomPasswordChangeForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        newpass1 = request.POST.get('new_password1')
+        newpass2 = request.POST.get('new_password2')
+        if newpass1 != newpass2:
+            messages.info(
+                request, 'Password does not match!')
+        elif len(newpass1) < 8 or len(newpass2) < 8:
+            messages.info(
+                request, 'Password should be greater than or equal to 8 characters!')
+        elif form.is_valid():
+            form.save(request.user)
+            messages.info(
+                request, 'Password was successfully updated!')
+            return redirect('login_admin')
+
     context = {
         'prices': view_prices,
-        'timer': view_timer
+        'timer': view_timer,
+        'form': form
     }
 
     return render(request, "home_admin.html", context)
@@ -110,6 +128,7 @@ def user_print(request):
 
 def loader(request):
     return render(request, "loader.html")
+
 
 def mobile_upload(request):
     return render(request, "mobile_upload.html")
@@ -211,7 +230,7 @@ def print_option(request):
         elif size == "legal":
             section_size.page_width = docx.shared.Inches(8.5)
             section_size.page_height = docx.shared.Inches(14)
-        
+
         for section in sections_orientation:
             if orientationn == "landscape":
                 if section.orientation == WD_ORIENT.PORTRAIT:
@@ -261,15 +280,17 @@ def logout_admin(request):
     logout(request)
     return redirect('login_admin')
 
+
 def my_view(request):
-    
-    
+
     return render(request, 'my_template.html')
 
+
 def change_html(request):
-    upload_val = UploadedFile.objects.filter(is_converted = 0).only('uploaded_file')
+    upload_val = UploadedFile.objects.filter(
+        is_converted=0).only('uploaded_file')
     print(upload_val)
     context = {
-        'uploadval':upload_val
-               }
-    return render(request, 'my_new_template.html',context)
+        'uploadval': upload_val
+    }
+    return render(request, 'my_new_template.html', context)

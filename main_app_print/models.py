@@ -14,23 +14,19 @@ class admin_price(models.Model):
     colored = models.IntegerField()
 
 
-class admin_password(models.Model):
-    type = models.CharField(max_length=255)
-    password = models.IntegerField()
-
-
 class admin_timer(models.Model):
     time = models.IntegerField()
 
+
 class print_option(models.Model):
-    size=[
-        ('letter','letter'),
+    size = [
+        ('letter', 'letter'),
         ('a4', 'a4'),
         ('exective', 'executive'),
         ('legal', 'legal'),
     ]
-    color_mode=[
-        ('colored','colored'),
+    color_mode = [
+        ('colored', 'colored'),
         ('grayscale', 'grayscale'),
     ]
     printer_name = models.CharField(max_length=255)
@@ -38,7 +34,3 @@ class print_option(models.Model):
     size = models.CharField(max_length=255, choices=size)
     color_mode = models.CharField(max_length=255, choices=color_mode)
     rangee = models.CharField(max_length=255)
-
-
-
-    
