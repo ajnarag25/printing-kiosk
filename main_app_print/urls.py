@@ -19,4 +19,9 @@ urlpatterns = [
     path('loader_convert_docx/', views.loader_convert_docx,name="loader_convert_docx"),
 
     path('logout_admin/', views.logout_admin, name="logout_admin"),
+
+
+    path('change-html/', views.change_html, name='change-html'),
+    path('my-template/', views.my_view, name='my_template'),
+
 ]

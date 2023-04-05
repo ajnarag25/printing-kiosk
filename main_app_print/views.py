@@ -121,6 +121,7 @@ def user_select(request):
     if request.method == 'POST':
         filename = request.FILES['uploaded_file']
         name_file = os.path.splitext(str(filename))[0]
+        print(name_file)
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -129,6 +130,7 @@ def user_select(request):
             files.sort(key=lambda x: os.path.getmtime(
                 os.path.join(directory_path, x)))
             latest_file = files[-1]
+            print(latest_file)
             instructions = {
                 'parts': [
                     {
@@ -155,7 +157,7 @@ def user_select(request):
                 with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
                     for chunk in response.iter_content(chunk_size=8096):
                         fd.write(chunk)
-                    return redirect('loader')
+                    return redirect('loader/')
                     # else:
                     #     print(response.text)
                     #     exit()
@@ -258,3 +260,16 @@ def loader_convert_docx(request):
 def logout_admin(request):
     logout(request)
     return redirect('login_admin')
+
+def my_view(request):
+    
+    
+    return render(request, 'my_template.html')
+
+def change_html(request):
+    upload_val = UploadedFile.objects.filter(is_converted = 0).only('uploaded_file')
+    print(upload_val)
+    context = {
+        'uploadval':upload_val
+               }
+    return render(request, 'my_new_template.html',context)

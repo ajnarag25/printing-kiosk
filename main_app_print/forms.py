@@ -5,7 +5,7 @@ from .models import *
 class UploadFileForm(forms.ModelForm):
     class Meta:
         model = UploadedFile
-        fields = ['uploaded_file']
+        fields = ['uploaded_file','is_converted']
 
 
 class price(forms.ModelForm):

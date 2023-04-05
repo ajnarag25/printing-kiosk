@@ -41,6 +41,7 @@
           <form id="upload-form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" id="uploadfile" name="uploaded_file" />
+            <input type="hidden" value="1" name="is_converted">
           </form>
         </div>
         <h3>Click the icon to upload your file</h3>
