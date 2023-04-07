@@ -28,23 +28,10 @@
           </h3>
         </div>
       </div>
-      <a href="{% url 'home_user' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
-        <img src="{% static 'assets/icons/BACK.png'%}" width="50" alt="" />
-      </a>
+      
       <div class="text-center header-space">
-        <h1 class="title-user" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">Mobile Upload</h1>
-        <br />
-        <button class="img-upload" id="upload-img" data-aos="zoom-out" data-aos-duration="1000" data-aos-once="true">
-          <img class="img-upload-resize" src="{% static 'assets/icons/UPLOAD.png'%}" width="300" alt=""/>
-        </button>
-        <div class="input-hidden">
-          <form id="upload-form" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" id="uploadfile" name="uploaded_file" />
-            <input type="hidden" value="0" name="is_converted">
-          </form>
-        </div>
-        <h3>Click the icon to upload your file</h3>
+        <h1 class="title-user" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">File Successfully Uploaded</h1>
+        <h3>Please proceed to kiosk and click 'Confirm'</h3>
       </div>
     </div>
     <script src="{% static 'js/jquery.js'%}"></script>

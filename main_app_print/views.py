@@ -131,12 +131,117 @@ def loader(request):
 
 
 def mobile_upload(request):
+    if request.method == 'POST':
+        filename = request.FILES['uploaded_file']
+        name_file = os.path.splitext(str(filename))[0]
+        print(filename)
+        print(name_file)
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = form.cleaned_data.get('uploaded_file')
+            is_converted = form.cleaned_data.get('is_converted')
+            print(uploaded_file)
+            print(is_converted)
+            form.save()
+            directory_path = 'uploads/'
+            files = os.listdir(directory_path)
+            files.sort(key=lambda x: os.path.getmtime(
+                os.path.join(directory_path, x)))
+            latest_file = files[-1]
+            print(latest_file)
+
+                    
+            return redirect('success_mobile')
+                    # else:
+                    #     print(response.text)
+                    #     exit()
+        else:
+            messages.info(request, 'Error uploading file')
+            print('error uploading file')
+    else:
+        form = UploadFileForm()
     return render(request, "mobile_upload.html")
 
 
-def user_select(request):
+def user_select_mobile(request):
+    return render(request, 'user_select_mobile.html')
+
+
+
+def user_select_update_mobile(request):
+    unconverted_file = None
+    count_is_converted = str(UploadedFile.objects.filter(is_converted = 0).count())
+    unconverted_file= UploadedFile.objects.filter(
+        is_converted=0).only('uploaded_file')
+    print(count_is_converted)
+
     hostname = socket.gethostname()
     IPAddr = socket.gethostbyname(hostname)
+    # if request.method == 'POST':
+    #     filename = request.FILES['uploaded_file']
+    #     name_file = os.path.splitext(str(filename))[0]
+    #     print(filename)
+    #     print(name_file)
+    #     form = UploadFileForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         uploaded_file = form.cleaned_data.get('uploaded_file')
+    #         is_converted = form.cleaned_data.get('is_converted')
+    #         print(uploaded_file)
+    #         print(is_converted)
+    #         form.save()
+    #         directory_path = 'uploads/'
+    #         files = os.listdir(directory_path)
+    #         files.sort(key=lambda x: os.path.getmtime(
+    #             os.path.join(directory_path, x)))
+    #         latest_file = files[-1]
+    #         print(latest_file)
+    #         instructions = {
+    #             'parts': [
+    #                 {
+    #                     'file': 'document'
+    #                 }
+    #             ]
+    #         } 
+    #         response = requests.request(
+    #             'POST',
+    #             'https://api.pspdfkit.com/build',
+    #             headers={
+    #                 'Authorization': 'Bearer pdf_live_fks3MaKwGQAaRm6H1atpHAGJalfmNAXLqorSmjhf6HX'
+    #             },
+    #             files={
+    #                 'document': open('uploads/'+str(latest_file), 'rb')
+    #             },
+    #             data={
+    #                 'instructions': json.dumps(instructions)
+    #             },
+    #             stream=True
+    #         )
+
+    #         if response.ok:
+    #             with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
+    #                 for chunk in response.iter_content(chunk_size=8096):
+    #                     fd.write(chunk)
+    #                 return redirect('loader')
+    #                 # else:
+    #                 #     print(response.text)
+    #                 #     exit()
+    #         else:
+    #             messages.info(request, 'Error uploading file')
+    #             print('error uploading file')
+    #     else:
+    #         messages.info(request, 'Error uploading file')
+    #         print('error uploading file')
+    # else:
+    #     form = UploadFileForm()
+    
+    context = {
+        'count_is_converted':count_is_converted,
+        'unconverted_file':unconverted_file,
+        'IPAddr':IPAddr
+    }
+    return render(request,'user_select_update_mobile.html',context)
+
+def user_select_usb(request):
     if request.method == 'POST':
         filename = request.FILES['uploaded_file']
         name_file = os.path.splitext(str(filename))[0]
@@ -176,7 +281,7 @@ def user_select(request):
                 with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
                     for chunk in response.iter_content(chunk_size=8096):
                         fd.write(chunk)
-                    return redirect('loader/')
+                    return redirect('loader')
                     # else:
                     #     print(response.text)
                     #     exit()
@@ -188,10 +293,13 @@ def user_select(request):
             print('error uploading file')
     else:
         form = UploadFileForm()
-    return render(request, 'user_select.html', {'form': form, 'ipadd': IPAddr})
+    return render(request,"user_select_usb.html",{'form': form})
+
+
 
 
 def print_option(request):
+    
     if request.method == 'POST':
         # pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
         pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
@@ -260,7 +368,63 @@ def print_option(request):
         # params = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+currentprinter+'" -all -portrait -copies 1 "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\main_app_print\\COLORED_PAGE.pdf"'
 
         # win32api.ShellExecute(0, 'open', GSPRINT_PATH, params, '.',0)
+   
     return render(request, 'printing_options.html')
+
+def confirm_file(request):
+    directory_path = 'uploads/'
+    files = os.listdir(directory_path)
+    files.sort(key=lambda x: os.path.getmtime(
+    os.path.join(directory_path, x)))
+    latest_file = files[-1]
+    print(latest_file)
+    name_file = os.path.splitext(str(latest_file))[0]
+    print(name_file)
+    if request.method == 'POST':
+        
+
+        instructions = {
+            'parts': [
+                {
+                    'file': 'document'
+                }
+            ]
+        }
+        response = requests.request(
+            'POST',
+            'https://api.pspdfkit.com/build',
+            headers={
+                'Authorization': 'Bearer pdf_live_fks3MaKwGQAaRm6H1atpHAGJalfmNAXLqorSmjhf6HX'
+            },
+            files={
+                'document': open('uploads/'+str(latest_file), 'rb')
+            },
+            data={
+                'instructions': json.dumps(instructions)
+            },
+            stream=True
+            )
+        if response.ok:
+            with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
+                for chunk in response.iter_content(chunk_size=8096):
+                    fd.write(chunk)
+                return redirect('loader')
+                # else:
+                #     print(response.text)
+                #     exit()
+        else:
+            messages.info(request, 'Error uploading file')
+            print('error uploading file')
+    context = {
+        'latest_file':latest_file,
+
+        }
+
+    return render(request,"confirm_file.html",context)
+
+
+def choose_mode(request):
+    return render(request,"choose_mode.html")
 
 
 def print_preview(request, color_mode):
@@ -280,6 +444,8 @@ def logout_admin(request):
     logout(request)
     return redirect('login_admin')
 
+def success_mobile(request):
+    return render(request,'success_mobile.html')
 
 def my_view(request):
 

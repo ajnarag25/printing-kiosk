@@ -5,6 +5,11 @@ body{
     font-size: 105px;
     letter-spacing: 10px;
 }
+.choose_mode_title{
+    font-size: 100px;
+    letter-spacing: 10px;
+
+}
 .title-admin{
     font-size: 80px;
     letter-spacing: 10px;
@@ -91,7 +96,10 @@ body{
     display: none;
 }
 
+.textfile-font{
 
+    font-size: large;
+}
 @media only screen and (max-width: 640px) {
     .title{
         font-size: 50px;
@@ -107,6 +115,9 @@ body{
     }
     .img-upload-resize{
         width: 200px;
+    }
+    .img-upload-success-size{
+        width: 80px;
     }
     .user-print{
         letter-spacing: 3px;

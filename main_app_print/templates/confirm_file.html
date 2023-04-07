@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/custom_style.css'%}" />
     <link rel="stylesheet" href="{% static 'css/loader.css'%}" />
     <link rel="stylesheet" href="{% static 'css/aos.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <style>
     .gooey {
@@ -28,27 +30,27 @@
           </h3>
         </div>
       </div>
-      <a href="{% url 'home_user' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
+      <a href="{% url 'user_select_mobile' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
         <img src="{% static 'assets/icons/BACK.png'%}" width="50" alt="" />
       </a>
-      <div class="text-center header-space">
-        <h1 class="title-user" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">Upload your file</h1>
-        <br />
-        <button class="img-upload" id="upload-img" data-aos="zoom-out" data-aos-duration="1000" data-aos-once="true">
-          <img class="img-upload-resize" src="{% static 'assets/icons/UPLOAD.png'%}" width="300" alt=""/>
-        </button>
-        <div class="input-hidden">
-          <form id="upload-form" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" id="uploadfile" name="uploaded_file" />
-            <input type="hidden" value="1" name="is_converted">
-          </form>
+      <div class="container text-center header-space">
+        <div id="link_wrapper">
+          
         </div>
-        <h3>Click the icon to upload your file</h3>
-        <p>
-          If you are using your phone to upload your file please go to this
-          link: <b class="text-primary">{{ipadd}}:8000/mobile_upload</b>
-        </p>
+      </div>
+      <div class="text-center header-space">
+
+        <h1 class="title-user" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">File Received</h1>
+        <img class="img-upload-success-size" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true" src="{% static 'assets/icons/FILE RECEIVED.png'%}" width="300" alt=""/>
+        <br />
+        <br />
+
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" class="form-control text-center textfile-font" name="file_name" id="printerName" value= "{{latest_file}}" readonly/>
+        <br>
+        <button type="submit" class="btn btn-primary"> Confirm File </button>
+        </form>
       </div>
     </div>
 
@@ -71,5 +73,6 @@
          once: true,
       });
     </script>
+
   </body>
 </html>

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/custom_style.css'%}" />
     <link rel="stylesheet" href="{% static 'css/loader.css'%}" />
     <link rel="stylesheet" href="{% static 'css/aos.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <style>
     .gooey {
@@ -28,11 +30,16 @@
           </h3>
         </div>
       </div>
-      <a href="{% url 'home_user' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
+      <a href="{% url 'choose_mode' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Back">
         <img src="{% static 'assets/icons/BACK.png'%}" width="50" alt="" />
       </a>
-      <div class="text-center header-space">
-        <h1 class="title-user" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">Mobile Upload</h1>
+      <div class="container text-center header-space">
+        <div id="link_wrapper">
+          
+        </div>
+      </div>
+      <!-- <div class="text-center header-space">
+        <h1 class="title-user" data-aos="zoom-in" data-aos-duration="1000" data-aos-once="true">Upload your file</h1>
         <br />
         <button class="img-upload" id="upload-img" data-aos="zoom-out" data-aos-duration="1000" data-aos-once="true">
           <img class="img-upload-resize" src="{% static 'assets/icons/UPLOAD.png'%}" width="300" alt=""/>
@@ -41,30 +48,41 @@
           <form id="upload-form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" id="uploadfile" name="uploaded_file" />
-            <input type="hidden" value="0" name="is_converted">
+            <input type="hidden" value="1" name="is_converted">
           </form>
         </div>
         <h3>Click the icon to upload your file</h3>
-      </div>
+        <p>
+          If you are using your phone to upload your file please go to this
+          link: <b class="text-primary">{{ipadd}}:8000/mobile_upload</b>
+        </p>
+      </div> -->
     </div>
+
     <script src="{% static 'js/jquery.js'%}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
     <script src="{% static 'js/functions.js'%}"></script>
     <script src="{% static 'js/sweetalert.js'%}"></script>
-    {% for message in messages %}
-    <script>
-      Swal.fire({
-        title: "{{message}}",
-        confirmButtonColor: "#d33",
-      });
-    </script>
-    {% endfor %}
-    <script src="{% static 'js/aos.js'%}"></script>
-    <script>
-      AOS.init({
-         duration: 3000,
-         once: true,
-      });
-    </script>
+
+        <!---refreshes the div everytime there's changes inside the database----->
+  <script>
+  function loadXMLDoc() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("link_wrapper").innerHTML =
+        this.responseText;
+      }
+    };
+    xhttp.open("GET", "{% url 'user_select_update_mobile' %}", true);
+    xhttp.send();
+  }
+  setInterval(function(){
+      loadXMLDoc();
+      // 1sec
+  },1000);
+  
+  window.onload = loadXMLDoc;
+  </script>
   </body>
 </html>
