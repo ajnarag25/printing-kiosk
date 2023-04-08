@@ -32,7 +32,7 @@
         <div class="col">
             <br><br>
             <h3><span><span><img src="{% static 'assets/icons/clock.png'%}" width="50px" height="50px" alt=""></span><strong>Time Remaining:</strong></h3>
-                <h2><strong>00:15 </strong></h2>
+                <h2 id="timer">15</h2><h2>Seconds</h2>
             
             
         </div>
@@ -63,5 +63,25 @@
 <script src="{% static 'js/jquery.js'%}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
 <script src="{% static 'js/functions.js'%}"></script>
+
+<script>
+  var seconds = 14;
+  var timer = setInterval(function() {
+    var countdown = document.getElementById("timer");
+    countdown.innerHTML = seconds;
+    seconds--;
+    if (seconds < 0) {
+      clearInterval(timer);
+      // window.location.href = "newpage.html";
+    }
+  }, 1000);
+
+  function resetTimer() {
+    var countdown = document.getElementById("timer");
+    var countdownInput = document.getElementById("timerInput");
+    seconds = 15;
+    countdown.innerHTML = seconds;
+  }
+</script>
 </body>
 </html>

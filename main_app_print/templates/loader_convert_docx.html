@@ -20,8 +20,9 @@
         </div>
         <br>
         <center>
-        
           <h6 id="change-text">Loading...</h6>
+
+  
          </center>
     </div>
 
@@ -43,11 +44,10 @@
           counter = (counter + 1) % texts.length;
       }, transitionDuration * 1000); // convert seconds to milliseconds
       }, delay);
-
+      
       setTimeout(function() {
-          window.location.href = "{% url 'print_preview' 'grayscale' %}"; // change URL to desired destination
-        }, 16000);
+          window.location.href = "{% url 'print_preview' %}"; // change URL to desired destination
+        }, 10000);
     </script>
-    
 </body>
 </html>

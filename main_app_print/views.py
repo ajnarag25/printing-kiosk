@@ -28,7 +28,7 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.utils.timezone import datetime
 from .forms import CustomPasswordChangeForm
-
+import time
 # from datetime import date
 # from docx import Document
 # from docx2pdf import convert
@@ -298,11 +298,20 @@ def user_select_usb(request):
 
 
 
-def print_option(request):
-    
+def print_optionn(request):
+    currentprinter = win32print.GetDefaultPrinter()
+    directory_path = 'converted_files/'
+    files = os.listdir(directory_path)
+    files.sort(key=lambda x: os.path.getmtime(
+    os.path.join(directory_path, x)))
+    latest_file = files[-1]
+    print(latest_file)
+    name_file = os.path.splitext(str(latest_file))[0]
+    print(name_file)
+    pdf_path = str(directory_path)+str(latest_file)
+    print(pdf_path)
+
     if request.method == 'POST':
-        # pdf_path = "C:/Users/admin/Downloads/General-features.pdf"
-        pdf_path = "C:/Users/admin/Downloads/COLORED_PAGE.pdf"
         docx_path = "docx_mod.docx"
         parse(pdf_path, docx_path)
         # back to pdf and then preview
@@ -314,12 +323,21 @@ def print_option(request):
         orientationn = request.POST.get('orientation')
         rangee = request.POST.get('rangee')
         custom_range = request.POST.get('custom_range')
-
         official_range = ""
         if rangee == "custom":
             official_range = custom_range
         else:
             official_range = rangee
+
+        update_data = print_option.objects.get(id=1)
+        update_data.printer_name = printer_name
+        update_data.copies = copies
+        update_data.size = size
+        update_data.color_mode = color_mode
+        update_data.rangee = official_range
+        update_data.save()
+
+        
 
         doc = docx.Document(docx_path)
         section_size = doc.sections[0]
@@ -358,8 +376,36 @@ def print_option(request):
                     pass
 
         doc.save(docx_path)
-        convert(docx_path, "C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
-        return redirect("loader_convert_docx")
+        # time.sleep(3)
+        # convert(docx_path, "C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
+        # return redirect("print_preview/grayscale")
+        instructions = {
+                'parts': [
+                    {
+                        'file': 'document'
+                    }
+                ]
+            }
+        response = requests.request(
+            'POST',
+            'https://api.pspdfkit.com/build',
+            headers={
+                'Authorization': 'Bearer pdf_live_fks3MaKwGQAaRm6H1atpHAGJalfmNAXLqorSmjhf6HX'
+            },
+            files={
+                'document': open(str(docx_path), 'rb')
+            },
+            data={
+                'instructions': json.dumps(instructions)
+            },
+            stream=True
+        )
+
+        if response.ok:
+            with open('C:/xampp/htdocs/practice_print_kios/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf', 'wb') as fd:
+                for chunk in response.iter_content(chunk_size=8096):
+                    fd.write(chunk)
+                return redirect('loader_convert_docx')
         # currentprinter = win32print.GetDefaultPrinter()
         # currentprinter = printer_name
         # rangee_obj = "-"+str(rangee)
@@ -369,7 +415,9 @@ def print_option(request):
 
         # win32api.ShellExecute(0, 'open', GSPRINT_PATH, params, '.',0)
    
-    return render(request, 'printing_options.html')
+    return render(request, 'printing_options.html',{'currentprinter':currentprinter})
+
+
 
 def confirm_file(request):
     directory_path = 'uploads/'
@@ -382,7 +430,6 @@ def confirm_file(request):
     print(name_file)
     if request.method == 'POST':
         
-
         instructions = {
             'parts': [
                 {
@@ -427,8 +474,9 @@ def choose_mode(request):
     return render(request,"choose_mode.html")
 
 
-def print_preview(request, color_mode):
-    context = {'color_mode': color_mode}
+def print_preview(request):
+    color_modee = print_option.objects.values_list('color_mode', flat=True).get(pk=1)
+    context = {'color_mode': color_modee}
     return render(request, 'print_preview.html', context)
 
 
@@ -437,7 +485,12 @@ def print_pay(request):
 
 
 def loader_convert_docx(request):
-    return render(request, 'loader_convert_docx.html')
+    color_modee = print_option.objects.values_list('color_mode', flat=True).get(pk=1)
+    print(color_modee)
+    context = {
+        'color_modee':color_modee
+    }
+    return render(request, 'loader_convert_docx.html',context)
 
 
 def logout_admin(request):
@@ -453,10 +506,9 @@ def my_view(request):
 
 
 def change_html(request):
-    upload_val = UploadedFile.objects.filter(
-        is_converted=0).only('uploaded_file')
-    print(upload_val)
+    color_modee = print_option.objects.values_list('color_mode', flat=True).get(pk=1)
+    print(color_modee)
     context = {
-        'uploadval': upload_val
+        'uploadval': color_modee
     }
     return render(request, 'my_new_template.html', context)
