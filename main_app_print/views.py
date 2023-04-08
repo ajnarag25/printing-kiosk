@@ -493,7 +493,7 @@ def print_pay(request):
         if color_modee == "colored":
             color_modee = "color"
         else:
-            color_modee = "mono"
+            color_modee = "gray"
         params1 = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+printer_name+'" -' +color_modee+ ' -'+rangee+' -copies '+ copies +' -'+rangee+' "C:/xampp/htdocs/practice_print_kios/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf'
         win32api.ShellExecute(0, 'open', GSPRINT_PATH, params1, '.',0)
         return redirect('print_success')
