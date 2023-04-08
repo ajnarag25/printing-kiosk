@@ -481,6 +481,24 @@ def print_preview(request):
 
 
 def print_pay(request):
+    if request.method == 'POST':
+        GHOSTSCRIPT_PATH = "C:\\Users\\admin\\Desktop\\gs\\bin\\gswin32.exe"
+        GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
+
+        # to_be_print = str("C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
+        printer_name = str(print_option.objects.values_list('printer_name', flat=True).get(pk=1))
+        copies = str(print_option.objects.values_list('copies', flat=True).get(pk=1))
+        color_modee = str(print_option.objects.values_list('color_mode', flat=True).get(pk=1))
+        rangee = str(print_option.objects.values_list('rangee', flat=True).get(pk=1))
+        if color_modee == "colored":
+            color_modee = "color"
+        else:
+            color_modee = "mono"
+        params1 = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+printer_name+'" -' +color_modee+ ' -'+rangee+' -copies '+ copies +' -'+rangee+' "C:/xampp/htdocs/practice_print_kios/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf'
+        win32api.ShellExecute(0, 'open', GSPRINT_PATH, params1, '.',0)
+        return redirect('print_success')
+
+
     return render(request, 'pay.html')
 
 
@@ -499,6 +517,18 @@ def logout_admin(request):
 
 def success_mobile(request):
     return render(request,'success_mobile.html')
+
+
+
+
+
+def print_success(request):
+    return render(request,"print_success.html")
+
+
+
+
+
 
 def my_view(request):
 

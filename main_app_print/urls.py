@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.index, name="home"),
+    path('indexx/', views.index, name="indexx"),
     path('home_user/', views.home_user, name="home_user"),
     path('home_admin/', views.home_admin, name="home_admin"),
     path('login_admin/', views.login_admin, name="login_admin"),
@@ -23,6 +24,7 @@ urlpatterns = [
     path('choose_mode/', views.choose_mode, name="choose_mode"),
     path('confirm_file/', views.confirm_file, name="confirm_file"),
     path('user_select_usb/', views.user_select_usb, name="user_select_usb"),
+    path('print_success/', views.print_success, name='print_success'),
     
     path('change-html/', views.change_html, name='change-html'),
     path('my-template/', views.my_view, name='my_template'),
