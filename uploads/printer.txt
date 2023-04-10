@@ -1,0 +1,4 @@
+copies/
+color
+orientation
+range/
