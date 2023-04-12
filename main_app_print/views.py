@@ -87,11 +87,16 @@ def home_admin(request):
         elif len(newpass1) < 8 or len(newpass2) < 8:
             messages.info(
                 request, 'Password should be greater than or equal to 8 characters!')
+
         elif form.is_valid():
-            form.save(request.user)
-            messages.info(
-                request, 'Password was successfully updated!')
-            return redirect('login_admin')
+            try:
+                form.save(request.user)
+                messages.info(
+                    request, 'Password was successfully updated!')
+                return redirect('login_admin')
+            except forms.ValidationError:
+                messages.info(
+                    request, 'Your old password was entered incorrectly. Please enter it again.')
 
     context = {
         'prices': view_prices,
@@ -150,11 +155,10 @@ def mobile_upload(request):
             latest_file = files[-1]
             print(latest_file)
 
-                    
             return redirect('success_mobile')
-                    # else:
-                    #     print(response.text)
-                    #     exit()
+            # else:
+            #     print(response.text)
+            #     exit()
         else:
             messages.info(request, 'Error uploading file')
             print('error uploading file')
@@ -167,11 +171,11 @@ def user_select_mobile(request):
     return render(request, 'user_select_mobile.html')
 
 
-
 def user_select_update_mobile(request):
     unconverted_file = None
-    count_is_converted = str(UploadedFile.objects.filter(is_converted = 0).count())
-    unconverted_file= UploadedFile.objects.filter(
+    count_is_converted = str(
+        UploadedFile.objects.filter(is_converted=0).count())
+    unconverted_file = UploadedFile.objects.filter(
         is_converted=0).only('uploaded_file')
     print(count_is_converted)
 
@@ -201,7 +205,7 @@ def user_select_update_mobile(request):
     #                     'file': 'document'
     #                 }
     #             ]
-    #         } 
+    #         }
     #         response = requests.request(
     #             'POST',
     #             'https://api.pspdfkit.com/build',
@@ -233,13 +237,14 @@ def user_select_update_mobile(request):
     #         print('error uploading file')
     # else:
     #     form = UploadFileForm()
-    
+
     context = {
-        'count_is_converted':count_is_converted,
-        'unconverted_file':unconverted_file,
-        'IPAddr':IPAddr
+        'count_is_converted': count_is_converted,
+        'unconverted_file': unconverted_file,
+        'IPAddr': IPAddr
     }
-    return render(request,'user_select_update_mobile.html',context)
+    return render(request, 'user_select_update_mobile.html', context)
+
 
 def user_select_usb(request):
     if request.method == 'POST':
@@ -293,9 +298,7 @@ def user_select_usb(request):
             print('error uploading file')
     else:
         form = UploadFileForm()
-    return render(request,"user_select_usb.html",{'form': form})
-
-
+    return render(request, "user_select_usb.html", {'form': form})
 
 
 def print_optionn(request):
@@ -303,7 +306,7 @@ def print_optionn(request):
     directory_path = 'converted_files/'
     files = os.listdir(directory_path)
     files.sort(key=lambda x: os.path.getmtime(
-    os.path.join(directory_path, x)))
+        os.path.join(directory_path, x)))
     latest_file = files[-1]
     print(latest_file)
     name_file = os.path.splitext(str(latest_file))[0]
@@ -336,8 +339,6 @@ def print_optionn(request):
         update_data.color_mode = color_mode
         update_data.rangee = official_range
         update_data.save()
-
-        
 
         doc = docx.Document(docx_path)
         section_size = doc.sections[0]
@@ -380,12 +381,12 @@ def print_optionn(request):
         # convert(docx_path, "C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
         # return redirect("print_preview/grayscale")
         instructions = {
-                'parts': [
-                    {
-                        'file': 'document'
-                    }
-                ]
-            }
+            'parts': [
+                {
+                    'file': 'document'
+                }
+            ]
+        }
         response = requests.request(
             'POST',
             'https://api.pspdfkit.com/build',
@@ -414,22 +415,21 @@ def print_optionn(request):
         # params = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+currentprinter+'" -all -portrait -copies 1 "C:\\xampp\\htdocs\\printing_kiosk\\printing_kiosk\\main_app_print\\COLORED_PAGE.pdf"'
 
         # win32api.ShellExecute(0, 'open', GSPRINT_PATH, params, '.',0)
-   
-    return render(request, 'printing_options.html',{'currentprinter':currentprinter})
 
+    return render(request, 'printing_options.html', {'currentprinter': currentprinter})
 
 
 def confirm_file(request):
     directory_path = 'uploads/'
     files = os.listdir(directory_path)
     files.sort(key=lambda x: os.path.getmtime(
-    os.path.join(directory_path, x)))
+        os.path.join(directory_path, x)))
     latest_file = files[-1]
     print(latest_file)
     name_file = os.path.splitext(str(latest_file))[0]
     print(name_file)
     if request.method == 'POST':
-        
+
         instructions = {
             'parts': [
                 {
@@ -450,7 +450,7 @@ def confirm_file(request):
                 'instructions': json.dumps(instructions)
             },
             stream=True
-            )
+        )
         if response.ok:
             with open('converted_files/'+str(name_file)+'.pdf', 'wb') as fd:
                 for chunk in response.iter_content(chunk_size=8096):
@@ -463,19 +463,20 @@ def confirm_file(request):
             messages.info(request, 'Error uploading file')
             print('error uploading file')
     context = {
-        'latest_file':latest_file,
+        'latest_file': latest_file,
 
-        }
+    }
 
-    return render(request,"confirm_file.html",context)
+    return render(request, "confirm_file.html", context)
 
 
 def choose_mode(request):
-    return render(request,"choose_mode.html")
+    return render(request, "choose_mode.html")
 
 
 def print_preview(request):
-    color_modee = print_option.objects.values_list('color_mode', flat=True).get(pk=1)
+    color_modee = print_option.objects.values_list(
+        'color_mode', flat=True).get(pk=1)
     context = {'color_mode': color_modee}
     return render(request, 'print_preview.html', context)
 
@@ -486,48 +487,48 @@ def print_pay(request):
         GSPRINT_PATH = "C:\\Users\\admin\\Desktop\\gs\\gsprint.exe"
 
         # to_be_print = str("C:/xampp/htdocs/print_kiosk_main/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf")
-        printer_name = str(print_option.objects.values_list('printer_name', flat=True).get(pk=1))
-        copies = str(print_option.objects.values_list('copies', flat=True).get(pk=1))
-        color_modee = str(print_option.objects.values_list('color_mode', flat=True).get(pk=1))
-        rangee = str(print_option.objects.values_list('rangee', flat=True).get(pk=1))
+        printer_name = str(print_option.objects.values_list(
+            'printer_name', flat=True).get(pk=1))
+        copies = str(print_option.objects.values_list(
+            'copies', flat=True).get(pk=1))
+        color_modee = str(print_option.objects.values_list(
+            'color_mode', flat=True).get(pk=1))
+        rangee = str(print_option.objects.values_list(
+            'rangee', flat=True).get(pk=1))
         if color_modee == "colored":
             color_modee = "color"
         else:
             color_modee = "gray"
-        params1 = '-ghostscript "'+ GHOSTSCRIPT_PATH  +'" -printer "'+printer_name+'" -' +color_modee+ ' -'+rangee+' -copies '+ copies +' -'+rangee+' "C:/xampp/htdocs/practice_print_kios/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf'
-        win32api.ShellExecute(0, 'open', GSPRINT_PATH, params1, '.',0)
+        params1 = '-ghostscript "' + GHOSTSCRIPT_PATH + '" -printer "'+printer_name+'" -' + color_modee + ' -'+rangee+' -copies ' + \
+            copies + ' -'+rangee + \
+            ' "C:/xampp/htdocs/practice_print_kios/printing-kiosk/main_app_print/static/pdf_file/to_be_print.pdf'
+        win32api.ShellExecute(0, 'open', GSPRINT_PATH, params1, '.', 0)
         return redirect('print_success')
-
 
     return render(request, 'pay.html')
 
 
 def loader_convert_docx(request):
-    color_modee = print_option.objects.values_list('color_mode', flat=True).get(pk=1)
+    color_modee = print_option.objects.values_list(
+        'color_mode', flat=True).get(pk=1)
     print(color_modee)
     context = {
-        'color_modee':color_modee
+        'color_modee': color_modee
     }
-    return render(request, 'loader_convert_docx.html',context)
+    return render(request, 'loader_convert_docx.html', context)
 
 
 def logout_admin(request):
     logout(request)
     return redirect('login_admin')
 
+
 def success_mobile(request):
-    return render(request,'success_mobile.html')
-
-
-
+    return render(request, 'success_mobile.html')
 
 
 def print_success(request):
-    return render(request,"print_success.html")
-
-
-
-
+    return render(request, "print_success.html")
 
 
 def my_view(request):
@@ -536,7 +537,8 @@ def my_view(request):
 
 
 def change_html(request):
-    color_modee = print_option.objects.values_list('color_mode', flat=True).get(pk=1)
+    color_modee = print_option.objects.values_list(
+        'color_mode', flat=True).get(pk=1)
     print(color_modee)
     context = {
         'uploadval': color_modee

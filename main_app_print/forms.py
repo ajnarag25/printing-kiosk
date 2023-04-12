@@ -32,9 +32,10 @@ class CustomPasswordChangeForm(forms.Form):
     def save(self, user):
         old_password = self.cleaned_data.get('old_password')
         new_password = self.cleaned_data.get('new_password1')
-        if not user.check_password(old_password):
+        if user.check_password(old_password):
+            user.set_password(new_password)
+            user.save()
+            return user
+        else:
             raise forms.ValidationError(
                 "Your old password was entered incorrectly. Please enter it again.")
-        user.set_password(new_password)
-        user.save()
-        return user
