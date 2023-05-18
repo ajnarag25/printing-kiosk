@@ -8,4 +8,3 @@ legal size, or A4, in multiple formats such as .pdf, .doc, .docx, .ppt, .pptx, .
 .odt, .ods, and .odp. This self-service kiosk has a bring-your-own-bond paper policy in
 which lets the users print their files in their desired bond paper size, and desired number of
 pages.
-asd
